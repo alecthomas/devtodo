@@ -1,0 +1,68 @@
+
+devtodo - hierarchical task list- Fix situation where doing "todo -r -5" goes into an endless loop.
+  (added 15/10/01, 01:03, incomplete, priority veryhigh)
+
+- Fix problems with * expansion. It doesn't appear to work at all...
+  (added 01/11/02, 01:53, incomplete, priority veryhigh)
+
+- Change everything to be an attribute (except, perhaps, the item body). This
+  will allow things like timers and so forth (eg. todo --add-attrib 'start=%D').
+  (added 23/05/01, 04:12, incomplete, priority high)
+
+- Add new filter options 'created=<date>[-<date>|,<date>]',
+  'completed=<date>[-<date>|,<date>]' and 'duration=<time>' to filtering code.
+  (added 14/04/01, 04:38, incomplete, priority medium)
+
+- Add a 'current' marker to items? ie. mark the item you are currently working
+  on so that it is easier to determine.
+  (added 14/04/01, 05:02, incomplete, priority medium)
+
+- Adding optional "hidden" notes to notes. Kind of like annotations. Invoke an
+  external editor for this facility? (idea courtesy of Alexei Gilchrist).
+  (added 18/04/01, 10:45, incomplete, priority medium)
+
+- Add encryption using crash::Encrypt classes. This will probably require MIME
+  support, or something similar, in order to actually store the resultant binary
+  information.
+  (added 20/04/01, 07:20, incomplete, priority medium)
+
+- Add per-database options - brilliant for changing views on different
+  databases.
+  (added 20/04/01, 09:35, incomplete, priority medium)
+
+- Add percentage completions?
+  (added 30/04/01, 08:38, incomplete, priority medium)
+
+- i18n support?
+  (added 30/04/01, 08:58, incomplete, priority medium)
+
+- Rewrite filtering code so it's generic (as the sorting code is).
+  (added 02/05/01, 00:36, incomplete, priority medium)
+
+- Write functions to do envar expansion, C string escaping, etc.
+  (added 07/05/01, 00:30, incomplete, priority medium)
+
+- Categories - optionally assign a note a category, then you can filter on that
+  category.
+  (added 05/10/01, 00:00, incomplete, priority medium)
+
+- Make priority names and number of them user-defineable.
+  (added 09/10/01, 12:20, incomplete, priority medium)
+
+- Some sort of integration with CVS would be cool. Maybe you could do: "todo
+  --cvs-commit" and it would commit to CVS using all the completed TODO items
+  since the last commit as the change notes. That would be exceptionally cool.
+  (added 18/04/01, 11:17, incomplete, priority low)
+
+- Evaluate filters on first use rather than on read. This will allow wildcard
+  filters to actually work.
+  (added 05/07/01, 06:49, incomplete, priority low)
+
+- Add facility to extract TODO entries in source code into .todo database.
+  Perhaps an external script or something would be better?
+  (added 28/01/01, 12:23, incomplete, priority verylow)
+
+- Minor bug where items with sub-items that are all marked done still get a +
+  when children are filtered out.
+  (added 28/01/01, 12:23, incomplete, priority verylow)
+

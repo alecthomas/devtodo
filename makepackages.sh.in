@@ -1,0 +1,97 @@
+#!/bin/sh
+#
+# Generate Slackware and RPM packages from devtodo source
+#
+
+prefix=@prefix@
+sysconfdir=`eval echo @sysconfdir@`
+PACKAGE=@PACKAGE@
+VERSION=@VERSION@
+ORIGDIR=`pwd`
+
+cat << EOF
+
+
+================================================================================
+                        Generating distribution tar file
+================================================================================
+
+
+EOF
+
+make dist
+
+cat << EOF
+
+
+================================================================================
+                                 Generating RPMs
+================================================================================
+
+
+EOF
+cp ${PACKAGE}-${VERSION}.tar.gz /usr/src/rpm/SOURCES
+rpmbuild -ba devtodo.spec
+mv /usr/src/rpm/RPMS/i386/${PACKAGE}-${VERSION}-1.i386.rpm .
+mv /usr/src/rpm/SRPMS/${PACKAGE}-${VERSION}-1.src.rpm .
+
+cat << EOF
+
+
+================================================================================
+                               Generating Slackpack
+================================================================================
+
+
+EOF
+PKGDIR=/var/tmp/${PACKAGE}-${VERSION}.slackpack
+
+cd /usr/src/rpm/BUILD/${PACKAGE}-${VERSION}
+
+test -d ${PKGDIR} && mkdir ${PKGDIR}
+
+make DESTDIR=${PKGDIR} install
+
+# copy documentation
+mkdir -p ${PKGDIR}/$prefix/doc/${PACKAGE}-${VERSION}
+cp doc/todorc.example doc/scripts.* README QuickStart INSTALL NEWS ChangeLog AUTHORS COPYING contrib/todo2html*.xslt contrib/tdrec ${PKGDIR}/$prefix/doc/${PACKAGE}-${VERSION}
+
+cd ${PKGDIR}
+
+mkdir -p install
+mv .$sysconfdir/todorc .$sysconfdir/todorc.latest
+
+cat << EOF > install/doinst.sh
+echo
+echo
+if test -f ${sysconfdir}/todorc; then
+	echo "Existing devtodo RC file not overwritten (new one is installed as "
+	echo "  ${sysconfdir}/todorc.latest)."
+else
+	echo "Installed example config file as ${sysconfdir}/todorc"
+	mv ${sysconfdir}/todorc.latest ${sysconfdir}/todorc
+fi
+echo
+echo
+EOF
+
+chmod +x install/doinst.sh
+
+/sbin/makepkg devtodo-${VERSION}-i386-1.tgz
+
+mv devtodo-${VERSION}-i386-1.tgz ${ORIGDIR}
+
+rm -rf ${PKGDIR}
+
+cd ${ORIGDIR}
+chown athomas.athomas ${PACKAGE}-${VERSION}-1.i386.rpm ${PACKAGE}-${VERSION}-1.src.rpm ${PACKAGE}-${VERSION}.tar.gz ${PACKAGE}-${VERSION}-i386-1.tgz
+
+cat << EOF
+
+
+================================================================================
+                           Package generation completed!
+================================================================================
+
+
+EOF

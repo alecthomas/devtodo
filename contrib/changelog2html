@@ -1,0 +1,79 @@
+#!/usr/bin/perl -w
+use strict;
+
+#
+# Not actually contributed by anybody, but people might find this useful.
+# 
+# This is a small PERL script to convert a ChangeLog in the same format as that
+# used by devtodo into HTML.
+#
+# DISCLAIMER: I've only been using PERL for about a week, so I'm sure there are 
+# much easier ways of doing some of these things.
+#
+
+sub htmlify {
+	s/&/&amp;/g;
+	s/</&lt;/g;
+	s/>/&gt;/g;
+	s/\n/<br>\n/g;
+	s/ /&nbsp;/g;
+	return $_;
+}
+
+open(CHANGELOG, "ChangeLog");
+
+my $version = "";
+my $item = "";
+my $pseudotime = 0;
+
+my $intensity = 0;
+my $textcolour = sprintf("%02x%02x%02x", $intensity * 255, $intensity * 255, $intensity * 255);
+my $titlecolour = sprintf("%02x%02x%02x", $intensity * 255, $intensity * 255, $intensity * 255);
+
+while (<CHANGELOG>) {
+	if (/^[0-9]\.[0-9]\.[0-9]/) {
+		if ($item ne "") {
+			print "<font color=#$textcolour>$item</font>";
+			print "</li>\n";
+			$item = "";
+		}
+		if ($version ne "") {
+			print "</ul>\n";
+			$version = "";
+		}
+		$textcolour = sprintf("%02x%02x%02x", $intensity * 255, $intensity * 255, $intensity * 255);
+		$titlecolour = sprintf("%02x%02x%02x", $intensity * 255, $intensity * 255, $intensity * 255);
+		$intensity += 0.1;
+		if ($intensity > 1.0) { goto quit; }
+		print "<ul><h3><font color=#$titlecolour>Version $_</font></h3>\n";
+		$pseudotime++;
+		$version = $_;
+	} elsif (/^\*/) {
+		s/^\*\w*//;
+		if ($item ne "") {
+			print "<font color=#$textcolour>$item</font>";
+			print "</li>\n";
+			$item = "";
+		}
+		print "<li color=#$textcolour>\n";
+		$pseudotime++;
+		$item = htmlify($_);
+	} else {
+		$item .= htmlify($_);
+	}
+}
+
+quit:
+
+if ($item ne "") {
+	print $item;
+	print "</li>\n";
+	$item = "";
+}
+
+if ($version ne "") {
+	print "</ul>\n";
+	$version = "";
+}
+
+close(CHANGELOG);

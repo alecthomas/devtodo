@@ -1,0 +1,34 @@
+%product devtodo
+%copyright GPL
+%vendor Alec Thomas <alec@korn.ch>
+%packager Giuseppe "Cowo" Corbelli <cowo@lugbs.linux.it>
+%license COPYING
+%readme README
+%version @VERSION@
+
+# Directories...
+$prefix=@prefix@
+$exec_prefix=@exec_prefix@
+$bindir=@bindir@
+$mandir=@mandir@
+$datadir=@datadir@
+
+d 755 root sys ${bindir} -
+f 755 root sys ${bindir}/devtodo src/devtodo
+l 755 root sys ${bindir}/tda ${bindir}/devtodo
+l 755 root sys ${bindir}/tdd ${bindir}/devtodo
+l 755 root sys ${bindir}/tde ${bindir}/devtodo
+l 755 root sys ${bindir}/tdr ${bindir}/devtodo
+l 755 root sys ${bindir}/todo ${bindir}/devtodo
+
+d 755 root sys /etc -
+f 644 root sys /etc/todorc doc/todorc.example
+
+d 755 root sys ${mandir} -
+d 755 root sys ${mandir}/man1 -
+f 644 root sys ${mandir}/man1/devtodo.1 doc/devtodo.1
+l 644 root sys ${mandir}/man1/tdr.1 ${mandir}/man1/devtodo.1
+l 644 root sys ${mandir}/man1/todo.1 ${mandir}/man1/devtodo.1
+l 644 root sys ${mandir}/man1/tda.1 ${mandir}/man1/devtodo.1
+l 644 root sys ${mandir}/man1/tdd.1 ${mandir}/man1/devtodo.1
+l 644 root sys ${mandir}/man1/tde.1 ${mandir}/man1/devtodo.1

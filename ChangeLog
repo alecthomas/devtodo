@@ -1,0 +1,422 @@
+0.1.18
+* Added --purge [<days-old>] option which lets you purge old completed items.
+  Thanks to Jakub Turski for wanting this feature.
+* Can now use force-colour in the todorc. 
+* Various patches from Debian and Gentoo maintainers applied. These fix
+  compiler errors on recent GCC versions, uncaught exception when TERM is not
+  set, a few man page issues, issues with the BASH scripts and miscellaneous
+  other things.
+
+0.1.17
+* Fixed seg-fault when specifying bold colours with the --colour option. Thanks
+  to Tim Peoples for pointing pointing this out.
+* Renamed regex.{c,h} to c_regex.{c,h} so they don't conflict with Regex.{cc,h}
+  under operating systems which do not honour case (OS/X and/or Cygwin). Also
+  removed -s (strip) from LDFLAGS, as this is not supported on some O/S' (eg.
+  OS/X). David Bacher wrote in with these issues.
+* Modified tod2html.xslt so the todo title is displayed in the page, as well as
+  in the page title.
+* Fixed an issue with not displaying links when timeout was in effect.
+* Added a new 'default' priority which has the following semantics: when adding
+  a new item it will be priority 'medium', when grafting to an existing item 
+  the new item will be given the parents priority, and when editing an existing
+  item its priority will be preserved. An items priority can be overridden on
+  the command line with --priority <priority> when any of these actions are 
+  performed. Devtodo will never prompt for priority with this enabled. Handy for
+  putting in your ~/.todorc.
+* Fixed display issues when summarising multi-line items.
+* Fixed a bug where colours were reset when displaying linked databases.
+  
+0.1.16
+* Made broken links silently fail rather than failing loudly and horribly.
+* Modified the semantics for expanding indices. Now when you use an index with
+  no modifier (eg. todo 10, as opposed to todo -10 or todo +10), only one
+  level of children is expanded.
+* Big change is the addition of multi-line items and title texts! This is a 
+  much requested feature. To use this, you can either pipe text into devtodo:
+  	cat <<- EOF | tda -p medium
+	This is some
+	multi-line 
+	text.
+	EOF
+  Or press <CTRL-N> to insert a new line when at the devtodo input prompt.
+
+0.1.15
+* Added --force-colour option to force use of colour even when not outputting to
+  a terminal. Requested by James Troup.
+* Added a patch sent in by Philipp Buehler which adds support for title strings
+  to the todo2html.xslt XSLT script.
+* Fixed bug when displaying priorities in TODO list ("mediumriority").
+* Added a MASSIVE patch sent in by Christian Hammond which adds support for 
+  linking other todo databases into one single view. This is extremely useful
+  for situations where you have a core project directory with sub-directories
+  containing unique individual databases. You can link them so they are all
+  viewed from the core database. Great work!
+* tda will now merge all non-quoted arguments into one string to be used for 
+  the body text of the item to add. This lets this work:
+    tda -p high Need to go to the shop and get some milk
+  without needing to do:
+    tda -p high "Need to go to the shop and get some milk"
+* Another bug report by James Troup via the Debian Project. Thanks James and
+  Arthur for being long time supporters of the project!
+* Made doc/scripts.sh more coherent and less convoluted.
+* A variation on the XSLT transform was sent in by Christian Hammond. An 
+  example of its use is available at http://www.chipx86.com/todo.ml.
+
+0.1.14
+* Fixed a bug where devtodo doesn't work without the TERM variable being set.
+  Caused havoc in Bill Carlson's cron job. Thanks for tracking it down Bill.
+* Fixed some more GCC 3.x compilation problems. I'm still using [io]strstream,
+  as opposed to the more correct [io]stringstream, so that it should still
+  compile with older versions of GCC. Fingers crossed.
+
+0.1.13
+* Patch from David Furodet to fix compilation problems on Solaris.
+* Added 'finishing comments'. This allows you to optionally add a comment to an
+  item when you are marking it as done, giving reasons/comments for why you are
+  marking it complete. This is really useful. This also breaks backward
+  compatibility with previous BINARY formats only. The XML format is not
+  affected.
+
+0.1.12
+* Applied a patch by Michael Tilstra that fixes segfaults when overriding 
+  colours.
+* Added a script (contrib/tdrec) to display databases from all sub-directories.
+  Thanks to Brian Herlihy for the contribution. Modified it slightly so it 
+  passes arguments to devtodo (such as --summary).
+* Modified cd, pushd and popd replacement scripts (doc/scripts.sh) so that their 
+  exit status is preserved. Required so things like this work correctly:
+    cd doc && echo foo
+  Thanks to Erin Quinlan for the fix.
+* Now displays the index of newly added items when --verbose is on. Thanks to 
+  James Troup for suggesting this.
+* Fixed man page inconsistency with '-S' and '-s' for summary mode. Thanks to 
+  James Troup again for picking this up.
+* Another problem found by James Troup - when grafting, the validity of the 
+  grafting index was only checked after the new item text was typed. This has
+  been recitifed.
+* Work around for some weirdness when generating RPM's.
+
+0.1.11
+* Modified .spec file so it doesn't do an aclocal/autoheader/automake/autoconf 
+  before compiling. Fixes incompatibilities between versions of automake.
+* Applied a patch sent in by Anreas Amann to fix more incompatibilities with 
+  GCC 3.0.
+
+0.1.10
+* Now 'using namespace std;'. It's the standard and it seems as if GCC 3.0 
+  finally requires it, so in it goes.
+* Fixed an incompatibility with versions of GCC prior to 3.0 using different
+  arguments to std::string::compare. Quite annoying. I replaced it with 
+  strncmp.
+* Readline is driving me insane. The example from the readline info page says
+  to use "completion_matches" so I basically copied the code verbatim. But
+  some versions don't seem to include the function in the readline header 
+  file? Agggggghh. So once again, it's back to using a manually created
+  header file. It seems to work the best.
+
+0.1.9
+* I had a bad feeling that including the readline headers would cause problems
+  and I was right :(. I'm now not including any readline headers of any form,
+  so if compilation breaks due to your system readline headers having K&R style
+  function declarations, upgrade to the latest version.
+* Renamed the XSLT examples to reflect their purpose (eg. xslt-example.1 => 
+  todo2pdf.xslt)
+
+0.1.8
+* Fixed for the spelling of "heirarchical" :)
+* Repatched --mono fix that gets rid of spurious escape sequences (picked up
+  by Mark Eichin).
+* Fixed envar expansion broken by event handling modifications. Whoops.
+* Numeric priorities can now be specified on the command line. Christian
+  Kurz picked this one up.
+* Added a new filter for searching through the database. This is done with 
+  the filter '/'. eg. "todo --filter /CVS" will show all items with the word
+  CVS in them. This can also be expressed as a shorthand version: "todo /CVS". 
+  The text is interpreted as a regular expression.
+* Changed filter behaviour to be more logical. Numeric filters with no sign 
+  prefix will now only show the item itself, not children. Prefixing the 
+  filter with a + will display the children as well and prefixing with a -
+  will filter out that item.
+* Subsequently almost totally rewrote filtering code so it's more logical and
+  doesn't break (hopefully).
+* Short arguments can now be fully merged into one argument. eg.
+    todo -v -v -f 2-10
+  can be represented as:
+    todo -vvf2-10
+* Added an "echo" command for use in ~/.todorc. This can be used for status
+  messages or whatever. eg.
+     on save echo Saved $TODODB
+* Added another PERL script (contrib/changelog2html) to convert directly from 
+  the ChangeLog to HTML.
+* Fixed default formatting string for --TODO.
+* James Troup had the suggestion (which is now implemented) of clearing the 
+  priority as soon as the user hits a key other than enter when editing an 
+  existing item. 
+* Copied the readline.h and history.h from my system's readline into devtodo's
+  source. Hopefully this won't break compiles on any systems :\.
+
+0.1.7
+* Finally tracked down the VERY nasty (at times up to a minute or more) 
+  slowdown some users have been experiencing. It turns out that one of the
+  recent versions of glibc has a bug in its regex code when dealing with
+  non-multibyte characters (ie. most of the time). This came to a head because
+  I upgraded to slackware-current, which has this version of glibc. Great.
+  Thanks to Mark Eichen for pointing me towards several Debian bug tracker
+  items about other programs having this same problem.
+* Added a new directory "contrib" which will be used for anything that users
+  contribute that is not patched into the main distribution.
+* XSLT transform courtesy of Mark Eichin, to convert devtodo XML databases into
+  colour PDF's. This is contrib/xslt-example.1.
+* XSLT contribution for converting devtodo XML databases into HTML, courtesy of
+  Daniel Peterson. This is contrib/xslt-example.2.
+* I have created an amalgam of the above two XSLT contributions that will
+  output a HTML page with colourised items. Completed items are struck out.
+  This is a dodgy hack, so if anybody has any enhancements it would be much
+  appreciated.
+* Changed filename of src/todo.cc to src/main.cc so that devtodo will compile
+  under environments where case is not relevant in filenames (ie. Cygwin under
+  M$ Windows).
+* Added a small PERL script to generate a todo database from a ChangeLog file
+  that's in the same format as that used by devtodo. In the contrib directory.
+  eg. changelog2todo > changelog.todo && devtodo --database changelog.todo
+* Added two new events: "load" and "save". This can be used in conjunction 
+  with one of the above XSLT files by putting something like the following in
+  your ~/.todorc (assuming you have libxlst installed - www.xmlsoft.org):
+
+  on save exec xsltproc $HOME/etc/todo-html.xslt $TODODB > `dirname $TODODB`/.todo.html
+
+  Which will basically generate a .todo.html file every time a devtodo database
+  is modified.
+* Fixed a few minor man page bugs.
+
+0.1.6-1
+* Changed --summary to a toggle so you can use "todo -s" to switch it on or off.
+  This minimises the use of the shift key ;).
+* Uncommented two lines so that --priority works once more when editing items.
+* Added RPMage.
+
+0.1.6
+* When creating backups, I now make the backed up databases read-only if 
+  --paranoid is specified.
+* A slight modification to the BASH shell script to make it more compatible
+  (courtesy of Arthur).
+* Added -S/--summary (and -s/--no-summary to override it if 'summary' is the 
+  default in ~/.todorc) which only displays the first line of todo items. This 
+  is handy if, like me, you have numerous multi-line items. The shell scripts
+  use this by default now, meaning when you cd into a directory only the first
+  line of each item will be shown (handy for a quick...summary).
+* Added --timeout [<seconds>] option. When no second are specified, todo will
+  only display the database if it hasn't been displayed within a number of 
+  seconds (also specified by using --timeout, but *with* a number of seconds). 
+  For example, by putting this in your ~/.todorc: "timeout 10", then adding 
+  "--timeout" when you run devtodo, the database will only be displayed if
+  it hasn't been displayed within 10 seconds. The shell scripts have been 
+  updated to use this facility. The access time is used to determine when the 
+  database was last used (stat.st_atime).
+* Unified formatting strings into one location and added the generic option
+  --format <tag>=<format-string> to modify them as well as the option
+  --use-format <tag>=<tag> to use them. eg. 
+      todo --use-format verbose-display=generated
+* Now attempts to obtain the width of the current terminal from the termcap
+  database (if compile fails (please send me a bug report, and...) re-run 
+  ./configure with the --without-termcap option).
+* Added a '%s' output formatting flag which formats item text the same as is
+  done with --summary.
+* You can use the (undocumented) --dump-config option to dump the current 
+  config to stdout. This should be usable as a ~/.todorc file pretty much
+  as is. Handy to use as a base for your own modifications.
+* Fixed a minor bug where invalid numeric priority exceptions weren't being
+  caught.
+* Added "title" as a defineable colour, seperate from the "info" colour.
+* Integrated some Debian Makefile mojo (thanks go to Arthur Korn).
+* Fixed --paranoid behaviour. The logic to check permissions had become
+  commented out in the move to multiple loaders.
+* Added an "exec" command to the ~/.todorc. This can be used to execute
+  shell commands from within devtodo, although it's really only useful in
+  conjunction with triggers (see below). In addition, the environment variable
+  TODODB will contain the name of the current database.
+* Added event "triggers". These are useful for modifying the behaviour of
+  devtodo. A perfect example of a use for this is to trap the "create" trigger
+  so that when a new database is created todo will remove world and group
+  permissions from it.  eg.
+      on create {
+          verbose
+          exec chmod 600 $TODODB
+      }
+* Modified Makefile.am in src and doc to support relocatable installs (via
+  automakes DESTDIR variable).
+
+0.1.5-1
+* Fixed a nasty Makefile bug that can, under certain circumstances, cause
+  the build/install to fail.
+
+0.1.5
+* Added a binary database format. The default is still XML, but you can 
+  change this using the new --database-loaders option. You can transparently
+  convert your existing XML databases to binary format (or vice-versa) by
+  simply changing the load order. For example, to change from XML to binary,
+  put this in your ~/.todorc: database-loaders binary,xml
+  The next time you modify an XML format database, it will be saved in binary 
+  format. The man page has more information. I recommend only using the binary
+  format if you are actually having performance problems, as if something
+  goes awry, manually fixing the XML database is *much* easier. But if you do
+  use it, it might be an idea to use it in conjunction with --backup.
+* Added user-defineable formatting for both display output and TODO generated
+  output. This is cool. Look for the section FORMATTING in the man page.
+* Added a new filter, which I've wanted for ages. It constists of a single '-', 
+  '+' or '='. A '-' stops display of all items except those explicitly specified
+  in the rest of the filter whereas a '+' overrides all other filters to display
+  all items. A '=' is the default behaviour. This is brilliant if you want
+  to narrow the view down to just one item: todo --filter -,29 (*Note*: Slightly
+  superceded by the modification to the semantics of numeric filters, which now
+  display *only* the numbers specified if the = (or no) prefix is used - see
+  two points down for more information).
+* Modified the numeric filters. Ranges can now be specified by doing this:
+  todo --filter 1-20. If a '-' sign precedes the range it explicitly excludes
+  all these items. This can also be used in most other places indices are used.
+  ie. todo --done 10.1-20 would mark items 10.1 through 10.20 as done.
+* Modified behaviour of numeric filters slightly. If prefix is '=' or none,
+  *only* those items are displayed. Before, this was a nop.
+* Patch to todorl.h courtesy of Philippe M. Chiasson that fixes compilation
+  problems on RH 7.0.
+* Priority defaults to medium if a blank line is entered at the "priority>"
+  prompt (thanks to Alexei Gilchrist for this idea, along with quite a few
+  others :))
+* Removed --fallback-database - the semantics were too clunky and generally
+  confusing.
+* Added --global-database <filename> and -G,--global to replace 
+  --fallback-database. Basically, you specify a file with --global-database
+  (defaults to ~/.todo_global) then whenever you pass -G or --global to todo it
+  will use the global database. Much simpler than the way --fallback-database
+  behaved. This idea was courtesy, once again, of Alexei Gilchrist. Good stuff!
+* todo can now automatically backup the database to a user specified number
+  of levels. Use the option --database [<n>] to do this, where <n> is the
+  optional number of revisions to keep (defaults to 1). This option is best
+  specified in your ~/.todorc.
+* Numbers can once again be used to specify priorities when entering them from
+  the 'priority>' prompt (requested by Alexei Gilchrist).
+
+0.1.4
+* Added version checking so that the binary won't accept databases from
+  future versions. The actual behaviour is that minor revision differences
+  produce a warning while major revision differences cause an error.
+* Added a patch from Arthur Korn that allows the bash scripts to cd into
+  directories with spaces.
+* Fixed a few man page problems, again courtesy of Arthur (I swear this
+  guy doesn't sleep!)
+* Changed primary binary to 'devtodo', with a convenience symlink, 'todo'.
+  Also changed the man page filename to reflect this. The user should see
+  no actual difference though, as symlinks with the old names exist.
+* Fixed a bug where todo would segfault if ^D was pressed while editing a 
+  line. Thanks to Matt Kraai for picking this up. The problem was due to 
+  not handling a NULL return value from readline.
+* More man page fixes (this time, thanks again go to Matt).
+* You can now specify more than one item index on the command line as
+  seperate arguments. Previously, a comma was required and if multiple 
+  arguments were used the last one was used. Arthur picked this one up.
+* Added parsing of /etc/todorc (actually, the location is specified by the 
+  --sysconfdir argument to configure, so it will probably be 
+  /usr/local/etc/todorc on most peoples systems).
+* Added awareness of the TODORC environment variable. This specifies the
+  RC file to parse on startup. TODORC=$HOME/.todorc is the default
+  behaviour. This idea was thanks to Claude. Claude also suggests, quite 
+  rightly, that it would be useful for specifying a system-wide todorc
+  file by putting TODORC=/etc/todorc in /etc/profile or somewhere similar.
+* Added two new arguments for modifying the database used. The first is
+  --database <file> which is used to change the default filename used. eg.
+  --database .todo is the default behaviour. The other is 
+  --fallback-database <file> which specifies the database to use if no other
+  can be found. By default there is no fallback database. Both of these 
+  options can be specified in the .todorc.
+* Environment variables can now be used in the ~/.todorc. This is especially
+  useful for something like 'fallback-database $HOME/.todo'.
+* Finally fixed the bug where &gt; and &amp; were not being correctly 
+  interpreted.
+* Fixed a long-time bug where wraptext() was wrapping the first 
+  line prematurely.
+* Fixed a bug where if the sort order changed, visible indices would not match
+  parameter indices.
+* --verbose now displays time between when an item was created and when it was
+  completed.
+* Added --date-format for formatting the display of dates (currently only used
+  with --verbose). The format is that used by strftime(3) but if strftime is not
+  available on a system, ctime(3) is used.
+* Added fully-featured sorting via the --sort parameter. It is now possible to
+  sort on pretty much anything you can think of; creation time, completed time,
+  duration of item, text body, priority and whether an item is done or not.
+* Added --paranoid option that enables some warnings about permissions. This
+  is in response to a user request to not make the .todo file group/world 
+  accessible. This option will make devtodo warn the user if such a database
+  is created.
+* Removed --sync and --no-sync. You can generate the TODO file with --TODO.
+
+0.1.3
+* Fixed a MAJOR bug introduced while fixing the non-correlating indices
+  where all editing of sub-items caused a seg-fault! This was a bad one.
+  Thanks to Ron Bailey for picking this one up.
+* Added auto-cd scripts for tcsh, courtesy of Matthew Russell.
+
+
+0.1.2
+* Regex needs sys/types.h to be included before regex.h on BSD - solution
+  thanks to Ashley Penney
+* Fixed curses failing to link on Solaris due to the link phase not
+  bringing in the termcap library. Thanks to Josh Wilmes for picking this 
+  up (subsequent autoconf script snippet shamelessly stolen from librep).
+* Fixed bug introduced by new colour code where colours were not being reset 
+  to the default terminal colour as they should have been. Once again, 
+  Stephan Hegel picked this one up...thanks again.
+* Related to the above bug, added a new 'colour' called 'default' which is
+  the terminals default colour and removed the defineable colour item
+  'normal'.
+* Fixed a fairly major bug that was triggered when changing the priority
+  of an existing item - it caused visible indices not to correlate with 
+  their actual index.
+* When grafting a child, the priority of the parent is used by default.
+* Added check for empty rx - FreeBSD doesn't support this.
+* Changed string parameter for Regex = to char const *. This fixes compile
+  errors using gcc 2.9.2 udner FreeBSD.
+* Changed default 'low' colour to un-bolded cyan.
+* Removed '-r' as a short option - this functionality only exists as 
+  --remove now.
+
+0.1.1
+* Bug picked up by Christoph Jaeger relating to the use of a temporary 
+  string in TodoDB::find() has been fixed - there may be more, need to 
+  investigate further.
+* Added call to rl_initialize so that ~/.inputrc gets read correctly - 
+  patch from Ulrich Pfeifer (with slight modifications by me).
+* Validated options in ~/.todorc so that options like 'add' and 'reparent' 
+  can't be used.
+* Added section on colours to the man page.
+* Made configure.in determine whether to use curses or ncurses (a problem 
+  picked up by Stephan Hegel) and abort if readline won't link properly.
+* A few minor man page fixes (again, thanks to Stephan Hegel) - also moved 
+  the man into configure.in so the version will be automatically updated.
+* Extracted all readline exports into todorl.h - these are required because
+  some versions of readline do NOT have C++ compatible headers, that is, the
+  most of the functions use implicit parameters which C++ barfs on.
+* Added --enable-debug to configure phase which removes -s from LDFLAGS 
+  and sets CXXFLAGS to '-Wall -g'.
+* Added --mono to remove all ANSI escape sequences - useful for the colour
+  impaired terminals (can also be put in ~/.todorc)
+* Cleaned up the TodoDB class a bit by moving the StreamColour stuff into
+  the class body itself.
+
+0.1.0
+* Added a ~/.todorc that basically lets you prepend command line arguments
+  to todo before it parses command line arguments. This is perfect for 
+  specifying default filters. My personal favourite is 'filter -children' to
+  not display child nodes by default. An example is in the doc sub-directory.
+* Changed the behaviour of filters slightly in that numeric values in filters
+  now represent item indices. Prefixed by a '-', this causes the specified
+  item to not be displayed. Prefixed by a '+', the specified item will be
+  displayed even if other filters inhibit it.
+* Added --colour facility so that users can override the default colours.
+* Added --reparent so that items can be moved around the tree.
+* If -v is specified, more information is printed out when editing, or adding
+  items as well as when adding a title.
+
+0.0.9
+* Initial release.

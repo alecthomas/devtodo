@@ -1,0 +1,380 @@
+.\" todo is licensed under the GPL, version 2. A copy of the GPL should have been distributed with the source in the file COPYING
+.TH @PACKAGE@ "1" @VERSION@ "Alec Thomas" "Programming utility"
+.SH "NAME"
+.LP 
+todo \- a reminder/task program aimed at developers
+.SH "SYNPOSIS"
+.LP 
+.TP 
+\fBtodo [\fI<options>\fP]\fP
+With no options, displays the items in the current directory.
+.TP 
+\fBtda [\-p \fI<priority>\fR] [\-g \fI<index>\fP] [\fI<text>\fP]\fP
+Add a new item, optionally grafting it as a child of the given item.
+.TP 
+\fBtde \fI<index>\fP\fP
+Edit the given item.
+.TP 
+\fBtdr \fI<indices>\fP\fP
+Remove the given items.
+.TP 
+\fBtdd \fI<indices>\fP\fP
+Mark the specified items as being done.
+.TP 
+\fBtdl [\-g \fI<index>\fP] \fI<database>\fP\fP
+Link the specified devtodo database into the current one, optionally grafting it as a child of the specified index.
+.SH "DESCRIPTION"
+.LP 
+\fBtodo\fP is a program aimed specifically at programmers (but usable by anybody at the terminal) to aid in day\-to\-day development.
+.LP 
+It maintains a list of items that have yet to be completed. This allows the programmer to track outstanding bugs or items that need to be completed with very little effort.
+.LP 
+Items can be prioritised and can also be displayed in a hierarchy, so that one item may depend on another.
+.LP 
+With the use of some small shell scripts (scripts.* in the doc directory of the source distribution), todo can also display the outstanding items in a directory as you change into it. So, for example, if you cd into the source directory for todo itself you should see a list of outstanding items...unless all of the bugs have been fixed ;).
+.SH "OPTIONS"
+.LP
+Options can have both a long and a short form. 
+.LP
+Short options can be combined into one argument by using a hyphen followed by a string of short options. Parameters of short options can also be appended to this string.
+.LP 
+.TP 
+\fB\-v, \-\-verbose\fR
+Display verbosely
+.TP 
+\fB\-a, \-\-add [\fI<text>\fR]\fR
+Add a note (will prompt for a note if one is not supplied).
+.TP 
+\fB\-g, \-\-graft \fI<index>\fR\fR
+In conjunction with \fI\-\-add\fR or \fI\-\-link\fR, graft the new item to the specified item.
+.TP
+\fB\-l, \-\-link \fI<database>\fR\fR
+Link the specified todo file into the body of this one. If the linked database has a title set, this will be used as the body of the linking item otherwise the directory name of the linked database will be used. Use --remove (or tdr) to remove linked databases - this does \fBnot\fR remove the database itself, only the link.
+.TP 
+\fB\-R,\-\-reparent \fI<index>[,<index>]\fR\fR
+Change the parent of the first item index to the second item index. If no second index is given the item is reparented to the root of the tree.
+.TP 
+\fB\-p, \-\-priority \fI<priority>\fR\fR
+In conjunction with \-\-add or \-\-edit, set the priority (default | veryhigh | high | medium | low | verylow)
+.TP 
+\fB\-e, \-\-edit \fI<index>\fR\fR
+Edit the note that is indexed by the given number.
+.TP 
+\fB\-\-remove \fI<indices>\fR\fR
+Remove the note indexed by the given numbers, including any children.
+.TP 
+\fB\-d, \-\-done \fI<indices>\fR\fR
+Mark the specified notes (and their children) as done.
+.TP 
+\fB\-D, \-\-not\-done \fI<indices>\fR\fR
+Mark the specified notes (and all children) as not done.
+.TP 
+\fB\-\-global\-database \fI<file>\fR\fR
+Specify the database to use if either the \fI-G\fR or \fI--global\fR options are specified.
+.TP
+\fB\-G, \-\-global\fR
+Force todo to use the database specified with \fI--global-database\fR. If this is placed in your \fI~/.todorc\fR it will force todo to use that database to the exclusion of all others.
+.TP 
+\fB\-\-database \fI<file>\fR\fR
+Change the database from whatever the default is (typically '.todo') to the file specified.
+.TP 
+\fB\-T, \-\-TODO\fR
+Generate a typical TODO output text file from a Todo DB.
+.TP 
+\fB\-A, \-\-all\fR
+Shortcut for the filter '+done,+children' to show all notes.
+.TP 
+\fB\-f, \-\-filter \fI<filter>\fR\fR
+Display only those notes that pass the filter. Please refer the section \fIFILTERS\fR for more information.
+.TP 
+\fB\-\-colour \fI<colours>\fR\fR
+Override default colours of todo items. Please refer to the section \fICOLOUR\fR for more information.
+.TP 
+\fB\-\-force\-colour\fR
+Force use of colour even when not outputting to a TTY. This is useful when piping to \fIless(1)\fR \-R.
+.TP 
+\fB\-\-mono\fR
+Remove all ANSI escape sequences from output - useful for colour impaired terminals.
+.TP 
+\fB\-\-help\fR
+Display this help.
+.TP 
+\fB\-\-version\fR
+Display version of ToDo.
+.TP 
+\fB\-\-title [\fI<text>\fR]\fR
+Set the title of this directory's todo notes.
+.TP 
+\fB\-\-date\-format \fI<format>\fR\fR
+Format the display of time values. The format is that used by strftime(3). The default format is '%c'. This option is best specified in the \fI~/.todorc\fR.
+.TP
+\fB\-\-format \fI<identifier>=<format>\fR\fR
+Specify the formatting of output. Please refer to the section FORMATTING for more information.
+.TP 
+\fB\-\-use\-format \fI<builtin>=<identifier>\fR\fR
+Use the format string identified by \fI<identifier>\fR (defined with \-\-format) as the format string to use when formatting with the builtin format \fI<builtin>\fR.
+.TP
+\fB\-\-sort \fI<expression>\fR\fR
+Sort the database with the specified expression. Refer to the section \fISORTING\fR for more detailed information.
+.TP
+\fB\-\-paranoid\fR
+Be paranoid about some settings, including permissions.
+.TP 
+\fB\-\-database\-loaders \fI<loader list>\fR\fR
+Try the database formats in the given order. Valid formats are \fIxml\fR and \fIbinary\fR. eg. todo --database-loaders binary,xml. The default format is XML.
+.TP 
+\fB\-\-backup [\fI<n>\fR]\fR
+Backup the database up to \fI<n>\fR times, just before it is written to. If \fI<n>\fR is not specified, one backup will be made. The filenames used to store the backups are the default database name with their revision appended like so: .todo.1, .todo.2, etc. To actually use one of these backups, you can either mv it to .todo or use --database .todo.<n> to explicitly specify its use.
+.TP
+\fB\-s, \-\-summary\fR
+Toggle "summary" mode, where long items are truncated to one line.
+.TP
+\fB\-c, \-\-comment\fR
+Edit or show comments respectively.
+.TP
+\fB\-\-timeout [\fI<time>\fR]\fR
+If \fI<time>\fR is specified, the timeout between database displays is set to this number of seconds. If no \fI<time>\fR is specified, the behaviour is to display the database \fIonly\fR if it has not been displayed for the number of seconds specified by --timeout \fIwith\fR the \fI<time>\fR given. eg. \fItodo --timeout 10 --timeout\fR would only display the database at most once every 10 seconds. Putting a \fItimeout 10\fR in your ~/.todorc is a good option, then the --timeout in the \fIdoc/scripts.*\fR will mean that the database won't be displayed every time you cd into a directory.
+.TP
+\fB\-\-purge [\fI<days-old>\fR]\fR
+Purge all completed items older than \fI<days-old>\fR. If \fI<days-old>\fR is omitted, all completed records are purged.
+.SH "PRIORITIES"
+.LP 
+Priorities can be specified symbolically using the words \fIdefault\fR, \fIveryhigh\fR, \fIhigh\fR, \fImedium\fR, \fIlow\fR and \fIverylow\fR.
+.LP
+The \fIdefault\fR priority has special meaning in that it will use the default priority for any action. This means that when editing an existing item, its priority is preserved; when creating a new item, the priority will be set to \fImedium\fR; when grafting a new item, its priority will be that of its parent. DevTodo will not prompt for priority if this is specified, making it a handy feature for your todorc. As with all options, the priority can be overridden on the command line.
+.SH "FILTERS"
+.LP
+Filters are comprised of a list of expressions used to define the notes that are displayed.
+.LP
+The general format of a filter expression is:
+.LP
+\fB([-|=|+](all|children|done|<index>|<priority>)) | (/<search expression>)\fR
+.LP
+Generally, if a filter expression is prefixed with a '-' it will \fInot\fR display items that match the expression, if prefixed with a '+' it will display items that match this expression in addition to others, or if prefixed with a '=' (or no prefix at all) it will display \fIonly\fR those items that match the expression. Note that this will only search items not excluded by other filters, so to search the entire database you will have to do something like: \fItodo \-\-filter all,/some-search-string\fR.
+.LP
+The second form of filter expression is used for searching for text in a database. \fI<search expression\>\fR is a regular expression which is matched against the text body of each item.
+.LP
+Filter atoms are filtered in order by done state, priority, then search. So first items that do not match the "done" filter will be excluded, then those that do not match the priority filter, and so on.
+.LP
+The expressions in detail:
+.TP
+\fBall\fR
+Forces all items to be displayed. The various prefixes have no effect on this expression.
+.TP
+\fBchildren\fR
+Collapse or expand child items. If the '-' prefix is present children are collapsed, otherwise children are displayed.
+.TP
+\fBdone\fR
+Filter on whether an item is completed or not.
+.TP
+\fB<index>\fR
+Note indices are specified as numbers. Ranges can be given ala '1.2.10-20'.
+.TP
+\fB<priority>\fR
+Priorities are specified as described in the \fIPRIORITIES\fR section. A prefix of '-' will display all items with priorities less than or equal to the given priority. With a '+' prefix, all items with priorities greater than or equal to the given priority are shown. If '=' or no prefix is given, only items with the specified priority are displayed.
+.LP
+Examples:
+.LP
+todo --filter done,-children,+low
+.LP
+This will display only those items that are done and have a priority of low or higher. In addition, children will be collapsed.
+.LP
+todo /[Tt]he
+.LP
+Display only those items with the word 'the' in them, where the first letter can be lower or upper case. It may be necessary to quote the search expression to ensure the shell does not interpret them.
+.SH "FORMATTING"
+.LP
+The output of todo can be changed to be more to your liking by defining your own formatting strings. These strings are similar to those used in printf(3) and strftime(3).
+.LP
+The following examples, which can be placed in ~/.todorc, will mimic the default behaviour:
+.LP
+# Display in default format
+.br
+format display=%i%[info]%f%2n.%[priority]%T
+.LP
+# Display in default format
+.br
+format generated=%2i-%T%2i  (added %d, priority %p)\\n\\n
+.LP
+There are four seperate format options: \fIdisplay\fR, \fIgenerated\fR, \fIverbose\-display\fR and \fIverbose-generated\fR. The latter two are used to format their respective text when --verbose is specified as an argument to todo.
+.LP
+In addition, users can create their own format strings by simply passing a different identifier to \fIformat\fR. This can then be enabled by using \fI\-\-use\-format\fR. eg.
+.LP
+.br
+format full-report=%i%[info]%f%2n.%[priority]%+1T%+1i%[info]Added: %[normal]%c  %[info]Completed: %[normal]%d\\n%+1i%[info]Duration: %[normal]%D  %[info]Priority: %[normal]%p\\n\\n
+.br
+# Override the display format to use "full-report".
+.br
+use-format display=full-report
+.LP
+The various flags that are available are:
+.TP
+\fB%<n>>\fR
+The \fI>\fR flag sets the number of spaces \fI<n>\fR to use for all future indenting.
+.TP
+\fB%[+|-][<n>]i\fR
+Indent to depth of current item. \fI<n>\fR specifies the depth to indent to. If \fI<n>\fR is ommitted, the current level is used. Relative values can be used. eg. '%+1T' would indent to one level higher than the current indentation level.
+.TP
+\fB%[+|-][<n>]T\fR
+Display the text of the item, wrapped at 80 characters and indented to the specified level. Semantics of \fI<n>\fR are as with \fI%i\fR. Note that wrapped text automatically adds a '\n' at the end of the text, whereas \fI%t\fR will not.
+.TP
+\fB%t\fR
+Unwrapped, unformatted text of the item.
+.TP
+\fB%s\fR
+Summary text (ie. one line only, equivalent to \fI--summary\fR).
+.TP
+\fB%p\fR
+The priority level of the current item.
+.TP
+\fB%c\fR
+The current items creation date, formatted according to --date-format.
+.TP
+\fB%d\fR
+The date when the item was marked as done, formatted according to --date-format.
+.TP
+\fB%D\fR
+The duration of the item, formatted according to --date-format.
+.TP
+\fB%[<n>]n\fR
+The index number of the current item. The optional numeric value \fI<n>\fR specifies the number of characters the number should occupy. The number is padded out with spaces so as to fill this number of characters.
+.TP
+\fB%f\fR
+The state flag of the current item. The displayed values for this flag are '+' means children, '-' means done', '*' means done with children.
+.TP
+\fB%F\fR
+The human readable state flag of the current item. The displayed values for this flag are 'children', 'done' means done', 'done, children' and 'open'.
+.TP
+\fB%[<colour>]\fR
+Colours can be specified with this flag. The valid values for \fI<colour>\fR are: \fIverylow\fR, \fIlow\fR, \fImedium\fR, \fIhigh\fR, \fIveryhigh\fR, \fItitle\fR, \fIinfo\fR, and \fIpriority\fR. These are fairly self explanatory, except \fIpriority\fR changes to the current items priority colour. eg. %[priority]
+.LP
+Please note that when indenting, you will \fItypically\fR want to use a prefix value of '+1' with %T. ie. %+1T. This forces the text to indent to one level deeper than the current level, making it sit away from any other formatting you may have used.
+.SH "SORTING"
+.LP 
+The display of items in the database can be sorted on a variety of keys. Given a series of keys todo sorts on each successive key, continuing to the next only if the previous key comparison was equal. For example:
+.LP
+todo --sort -done,text
+.LP
+This will sort firstly by whether an item is completed and secondly by their text. This effectively groups items into two blocks \- those that are complete and those that aren't.
+.LP
+The keys that are available are \fIcreated\fR, \fIcompleted\fR, \fItext\fR, \fIpriority\fR, \fIduration\fR, \fInone\fR and \fIdone\fR. Each key, except \fInone\fR can be prefixed with a - to reverse its default order and multiple keys must be seperated with a ,.
+.LP
+If multiple --sort parameters are encountered the last one is used. This means that a 'sort' entry in ~/.todorc will be overridden by any on the command line.
+.SH "INDICES"
+.LP 
+Indicies are used as options to a variety of command line arguments. Multiple note indices are seperated with commas (spaces are \fInot\fR allowed). Children are scoped using a '.'.
+.LP 
+For example, given the following notes:
+
+1. Do man pages
+   1. Make them more beautiful.
+   2. Make HTML documentation as well.
+
+The second sub\-item would be represented like this: 1.2
+.LP 
+The wildcard '*' can be used to represent all children of a node. eg. 1.*
+.LP
+Ranges of notes can be specified by using '<a>-<b>'. For example, to mark notes 10.1.2, 10.1.3 and 10.3.4 as done, you could do: todo --done 10.1.2-4
+.SH "COLOUR"
+.LP 
+Various items can be colourised. Items that can are \fIveryhigh\fR, \fIhigh\fR, \fImedium\fR, \fIlow\fR, \fIverylow\fR, \fItitle\fR and \fIinfo\fR. \fIinfo\fR is used for displaying item numbers and general information.
+.LP 
+These items can be set to one of eight colours. Those colours are \fIblack\fR, \fIred\fR, \fIgreen\fR, \fIyellow\fR, \fIblue\fR, \fImagenta\fR, \fIcyan\fR, \fIwhite\fR and \fIdefault\fR. The colour \fIdefault\fR is used to specify the default foreground terminal colour.
+.LP 
+Colours are specified like so:
+.LP 
+\fI<item>\fR=\fI[+]\fR\fI<colour>\fR
+.LP 
+If the optional \fI+\fR in this expression is used it will cause the item to become bold.
+.LP 
+For example, a line in your ~/.todorc might look like:
+.LP 
+colour	medium=+white
+.LP 
+Which would make \fImedium\fR text \fIbold\fR \fIwhite\fR.
+.SH "TODORC"
+.LP 
+todo can load options from a number of resource files. The order in which these are parsed is as follows:
+.LP
+1. The file specified in the environment variable \fBTODORC\fR or, if that does not exist, \fB@SYSCONFDIR@/todorc\fR.
+.br
+2. \fB~/.todorc\fR
+.LP
+Options are cumulative in that those loaded from $TODORC will be overridden or added to by those in ~/.todorc.
+.LP 
+These options are specified as key/value pairs, one per line The key is the long name of a command line argument and the value is the parameter to that argument,if any. In addition, environment variables are expanded. 
+.LP 
+For example, the \-\-filter command line argument accepts a parameter that is a filter expression. A default filter could be added to the ~/.todorc file like so:
+.LP 
+# Don't display child items by default
+.br 
+filter \-children
+.br 
+.LP
+The only difference between options specified in the rc file and those on the command line is that options in the rc file are not prefixed by \-\-.
+.LP
+In addition, there are two commands available in the RC file that are not available on the command line. They are:
+.LP
+The first command, \fIon\fR, is used to conditionally add specific commands. The format of this command is: \fIon <event> <command> [<arguments>]\fR. Valid events are \fIadd\fR, \fIremove\fR, \fIview\fR, \fIedit\fR, \fIgenerate\fR, \fIdone\fR, \fInotdone\fR, \fItitle\fR, \fIreparent\fR, \fIload\fR, \fIsave\fR, \fIlink\fR, \fIcreate\fR and \fIpurge\fR. Multiple commands can be passed to \fIon\fR by enclosing them in braces (whitespace is required between tokens). Full example below.
+.LP
+The second command is \fIexec <shell command>\fR. This command will execute the argument it is given in a shell. The environment variable \fI$TODODB\fR contains the filename of the current database. eg. \fIexec chmod 600 $TODODB\fR
+.LP 
+There is an example rc file in the doc subdirectory of the source distribution.
+.LP
+.SH "EXAMPLES"
+.LP 
+To display any outstanding items in the current directory, simply type:
+.LP 
+	todo
+.LP 
+To remove notes 1, 2 and 4:
+.LP 
+	todo \-\-remove 1,2,4
+.LP 
+To display ALL items:
+.LP 
+	todo all
+.LP 
+To display only the top\-level items and not their children:
+.LP 
+	todo \-children
+.LP 
+(even though \fI\-children\fR is not a valid argument, this works because todo interprets any command line arguments it doesn't recognise as being part of a filter expression)
+.LP 
+A more complex example. This adds a new item, with the text of the item specified on the command line, with a priority of \fIhigh\fR as a child of the third child of the second item (if that makes any sense):
+.LP 
+	todo \-a "Fix the man page" \-p high \-g 2.3
+.LP 
+This is an example of how to use the TODO feature of todo. It makes todo generate a new TODO file from the information stored in the database. This particular example outputs all items to the TODO file, even those marked as done.
+.LP 
+	todo \-\-filter all \-\-TODO 
+.LP
+This example shows a nice use of the event triggers. When a new database is created it will force its permissions to 0600.
+.br
+	
+.br
+	on create {
+.br
+		verbose
+.br
+		exec chmod 600 .todo
+.br
+	}
+.br
+.SH "FILES"
+.LP 
+.TP 
+\fB .todo\fR
+Items are stored as XML in this file.
+.TP
+\fB@SYSCONFDIR@/todorc\fR
+Default options can be specified in this file. Please refer to the section \fBTODORC\fR for more information.
+.TP 
+\fB~/.todorc\fR
+User-specific options are specified in this file. Please refer to the section \fBTODORC\fR for more information.
+.SH "AUTHORS"
+.LP 
+Alec Thomas \fI<alec@swapoff.org>\fR
+.SH "SEE ALSO"
+.LP 
+phpsat \fI<http://sourceforge.net/projects/phpsat>\fR

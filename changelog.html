@@ -1,0 +1,267 @@
+<ul><h3><font color=#000000>Version 0.1.17
+</font></h3>
+<li color=#000000>
+<font color=#000000>&nbsp;Fixed&nbsp;seg-fault&nbsp;when&nbsp;specifying&nbsp;bold&nbsp;colours&nbsp;with&nbsp;the&nbsp;--colour&nbsp;option.&nbsp;Thanks<br>
+&nbsp;&nbsp;to&nbsp;Tim&nbsp;Peoples&nbsp;for&nbsp;pointing&nbsp;pointing&nbsp;this&nbsp;out.<br>
+</font></li>
+<li color=#000000>
+<font color=#000000>&nbsp;Renamed&nbsp;regex.{c,h}&nbsp;to&nbsp;c_regex.{c,h}&nbsp;so&nbsp;they&nbsp;don't&nbsp;conflict&nbsp;with&nbsp;Regex.{cc,h}<br>
+&nbsp;&nbsp;under&nbsp;operating&nbsp;systems&nbsp;which&nbsp;do&nbsp;not&nbsp;honour&nbsp;case&nbsp;(OS/X&nbsp;and/or&nbsp;Cygwin).&nbsp;Also<br>
+&nbsp;&nbsp;removed&nbsp;-s&nbsp;(strip)&nbsp;from&nbsp;LDFLAGS,&nbsp;as&nbsp;this&nbsp;is&nbsp;not&nbsp;supported&nbsp;on&nbsp;some&nbsp;O/S'&nbsp;(eg.<br>
+&nbsp;&nbsp;OS/X).&nbsp;David&nbsp;Bacher&nbsp;wrote&nbsp;in&nbsp;with&nbsp;these&nbsp;issues.<br>
+</font></li>
+<li color=#000000>
+<font color=#000000>&nbsp;Modified&nbsp;tod2html.xslt&nbsp;so&nbsp;the&nbsp;todo&nbsp;title&nbsp;is&nbsp;displayed&nbsp;in&nbsp;the&nbsp;page,&nbsp;as&nbsp;well&nbsp;as<br>
+&nbsp;&nbsp;in&nbsp;the&nbsp;page&nbsp;title.<br>
+</font></li>
+<li color=#000000>
+<font color=#000000>&nbsp;Fixed&nbsp;an&nbsp;issue&nbsp;with&nbsp;not&nbsp;displaying&nbsp;links&nbsp;when&nbsp;timeout&nbsp;was&nbsp;in&nbsp;effect.<br>
+</font></li>
+<li color=#000000>
+<font color=#000000>&nbsp;Added&nbsp;a&nbsp;new&nbsp;'default'&nbsp;priority&nbsp;which&nbsp;has&nbsp;the&nbsp;following&nbsp;semantics:&nbsp;when&nbsp;adding<br>
+&nbsp;&nbsp;a&nbsp;new&nbsp;item&nbsp;it&nbsp;will&nbsp;be&nbsp;priority&nbsp;'medium',&nbsp;when&nbsp;grafting&nbsp;to&nbsp;an&nbsp;existing&nbsp;item&nbsp;<br>
+&nbsp;&nbsp;the&nbsp;new&nbsp;item&nbsp;will&nbsp;be&nbsp;given&nbsp;the&nbsp;parents&nbsp;priority,&nbsp;and&nbsp;when&nbsp;editing&nbsp;an&nbsp;existing<br>
+&nbsp;&nbsp;item&nbsp;its&nbsp;priority&nbsp;will&nbsp;be&nbsp;preserved.&nbsp;An&nbsp;items&nbsp;priority&nbsp;can&nbsp;be&nbsp;overridden&nbsp;on<br>
+&nbsp;&nbsp;the&nbsp;command&nbsp;line&nbsp;with&nbsp;--priority&nbsp;&lt;priority&gt;&nbsp;when&nbsp;any&nbsp;of&nbsp;these&nbsp;actions&nbsp;are&nbsp;<br>
+&nbsp;&nbsp;performed.&nbsp;Devtodo&nbsp;will&nbsp;never&nbsp;prompt&nbsp;for&nbsp;priority&nbsp;with&nbsp;this&nbsp;enabled.&nbsp;Handy&nbsp;for<br>
+&nbsp;&nbsp;putting&nbsp;in&nbsp;your&nbsp;~/.todorc.<br>
+</font></li>
+<li color=#000000>
+<font color=#000000>&nbsp;Fixed&nbsp;display&nbsp;issues&nbsp;when&nbsp;summarising&nbsp;multi-line&nbsp;items.<br>
+</font></li>
+<li color=#000000>
+<font color=#000000>&nbsp;Fixed&nbsp;a&nbsp;bug&nbsp;where&nbsp;colours&nbsp;were&nbsp;reset&nbsp;when&nbsp;displaying&nbsp;linked&nbsp;databases.<br>
+&nbsp;&nbsp;<br>
+</font></li>
+</ul>
+<ul><h3><font color=#191919>Version 0.1.16
+</font></h3>
+<li color=#191919>
+<font color=#191919>&nbsp;Made&nbsp;broken&nbsp;links&nbsp;silently&nbsp;fail&nbsp;rather&nbsp;than&nbsp;failing&nbsp;loudly&nbsp;and&nbsp;horribly.<br>
+</font></li>
+<li color=#191919>
+<font color=#191919>&nbsp;Modified&nbsp;the&nbsp;semantics&nbsp;for&nbsp;expanding&nbsp;indices.&nbsp;Now&nbsp;when&nbsp;you&nbsp;use&nbsp;an&nbsp;index&nbsp;with<br>
+&nbsp;&nbsp;no&nbsp;modifier&nbsp;(eg.&nbsp;todo&nbsp;10,&nbsp;as&nbsp;opposed&nbsp;to&nbsp;todo&nbsp;-10&nbsp;or&nbsp;todo&nbsp;+10),&nbsp;only&nbsp;one<br>
+&nbsp;&nbsp;level&nbsp;of&nbsp;children&nbsp;is&nbsp;expanded.<br>
+</font></li>
+<li color=#191919>
+<font color=#191919>&nbsp;Big&nbsp;change&nbsp;is&nbsp;the&nbsp;addition&nbsp;of&nbsp;multi-line&nbsp;items&nbsp;and&nbsp;title&nbsp;texts!&nbsp;This&nbsp;is&nbsp;a&nbsp;<br>
+&nbsp;&nbsp;much&nbsp;requested&nbsp;feature.&nbsp;To&nbsp;use&nbsp;this,&nbsp;you&nbsp;can&nbsp;either&nbsp;pipe&nbsp;text&nbsp;into&nbsp;devtodo:<br>
+&nbsp;&nbsp;	cat&nbsp;&lt;&lt;-&nbsp;EOF&nbsp;|&nbsp;tda&nbsp;-p&nbsp;medium<br>
+	This&nbsp;is&nbsp;some<br>
+	multi-line&nbsp;<br>
+	text.<br>
+	EOF<br>
+&nbsp;&nbsp;Or&nbsp;press&nbsp;&lt;CTRL-N&gt;&nbsp;to&nbsp;insert&nbsp;a&nbsp;new&nbsp;line&nbsp;when&nbsp;at&nbsp;the&nbsp;devtodo&nbsp;input&nbsp;prompt.<br>
+<br>
+</font></li>
+</ul>
+<ul><h3><font color=#333333>Version 0.1.15
+</font></h3>
+<li color=#333333>
+<font color=#333333>&nbsp;Added&nbsp;--force-colour&nbsp;option&nbsp;to&nbsp;force&nbsp;use&nbsp;of&nbsp;colour&nbsp;even&nbsp;when&nbsp;not&nbsp;outputting&nbsp;to<br>
+&nbsp;&nbsp;a&nbsp;terminal.&nbsp;Requested&nbsp;by&nbsp;James&nbsp;Troup.<br>
+</font></li>
+<li color=#333333>
+<font color=#333333>&nbsp;Added&nbsp;a&nbsp;patch&nbsp;sent&nbsp;in&nbsp;by&nbsp;Philipp&nbsp;Buehler&nbsp;which&nbsp;adds&nbsp;support&nbsp;for&nbsp;title&nbsp;strings<br>
+&nbsp;&nbsp;to&nbsp;the&nbsp;todo2html.xslt&nbsp;XSLT&nbsp;script.<br>
+</font></li>
+<li color=#333333>
+<font color=#333333>&nbsp;Fixed&nbsp;bug&nbsp;when&nbsp;displaying&nbsp;priorities&nbsp;in&nbsp;TODO&nbsp;list&nbsp;("mediumriority").<br>
+</font></li>
+<li color=#333333>
+<font color=#333333>&nbsp;Added&nbsp;a&nbsp;MASSIVE&nbsp;patch&nbsp;sent&nbsp;in&nbsp;by&nbsp;Christian&nbsp;Hammond&nbsp;which&nbsp;adds&nbsp;support&nbsp;for&nbsp;<br>
+&nbsp;&nbsp;linking&nbsp;other&nbsp;todo&nbsp;databases&nbsp;into&nbsp;one&nbsp;single&nbsp;view.&nbsp;This&nbsp;is&nbsp;extremely&nbsp;useful<br>
+&nbsp;&nbsp;for&nbsp;situations&nbsp;where&nbsp;you&nbsp;have&nbsp;a&nbsp;core&nbsp;project&nbsp;directory&nbsp;with&nbsp;sub-directories<br>
+&nbsp;&nbsp;containing&nbsp;unique&nbsp;individual&nbsp;databases.&nbsp;You&nbsp;can&nbsp;link&nbsp;them&nbsp;so&nbsp;they&nbsp;are&nbsp;all<br>
+&nbsp;&nbsp;viewed&nbsp;from&nbsp;the&nbsp;core&nbsp;database.&nbsp;Great&nbsp;work!<br>
+</font></li>
+<li color=#333333>
+<font color=#333333>&nbsp;tda&nbsp;will&nbsp;now&nbsp;merge&nbsp;all&nbsp;non-quoted&nbsp;arguments&nbsp;into&nbsp;one&nbsp;string&nbsp;to&nbsp;be&nbsp;used&nbsp;for&nbsp;<br>
+&nbsp;&nbsp;the&nbsp;body&nbsp;text&nbsp;of&nbsp;the&nbsp;item&nbsp;to&nbsp;add.&nbsp;This&nbsp;lets&nbsp;this&nbsp;work:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tda&nbsp;-p&nbsp;high&nbsp;Need&nbsp;to&nbsp;go&nbsp;to&nbsp;the&nbsp;shop&nbsp;and&nbsp;get&nbsp;some&nbsp;milk<br>
+&nbsp;&nbsp;without&nbsp;needing&nbsp;to&nbsp;do:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tda&nbsp;-p&nbsp;high&nbsp;"Need&nbsp;to&nbsp;go&nbsp;to&nbsp;the&nbsp;shop&nbsp;and&nbsp;get&nbsp;some&nbsp;milk"<br>
+</font></li>
+<li color=#333333>
+<font color=#333333>&nbsp;Another&nbsp;bug&nbsp;report&nbsp;by&nbsp;James&nbsp;Troup&nbsp;via&nbsp;the&nbsp;Debian&nbsp;Project.&nbsp;Thanks&nbsp;James&nbsp;and<br>
+&nbsp;&nbsp;Arthur&nbsp;for&nbsp;being&nbsp;long&nbsp;time&nbsp;supporters&nbsp;of&nbsp;the&nbsp;project!<br>
+</font></li>
+<li color=#333333>
+<font color=#333333>&nbsp;Made&nbsp;doc/scripts.sh&nbsp;more&nbsp;coherent&nbsp;and&nbsp;less&nbsp;convoluted.<br>
+</font></li>
+<li color=#333333>
+<font color=#333333>&nbsp;A&nbsp;variation&nbsp;on&nbsp;the&nbsp;XSLT&nbsp;transform&nbsp;was&nbsp;sent&nbsp;in&nbsp;by&nbsp;Christian&nbsp;Hammond.&nbsp;An&nbsp;<br>
+&nbsp;&nbsp;example&nbsp;of&nbsp;its&nbsp;use&nbsp;is&nbsp;available&nbsp;at&nbsp;http://www.chipx86.com/todo.ml.<br>
+<br>
+</font></li>
+</ul>
+<ul><h3><font color=#4c4c4c>Version 0.1.14
+</font></h3>
+<li color=#4c4c4c>
+<font color=#4c4c4c>&nbsp;Fixed&nbsp;a&nbsp;bug&nbsp;where&nbsp;devtodo&nbsp;doesn't&nbsp;work&nbsp;without&nbsp;the&nbsp;TERM&nbsp;variable&nbsp;being&nbsp;set.<br>
+&nbsp;&nbsp;Caused&nbsp;havoc&nbsp;in&nbsp;Bill&nbsp;Carlson's&nbsp;cron&nbsp;job.&nbsp;Thanks&nbsp;for&nbsp;tracking&nbsp;it&nbsp;down&nbsp;Bill.<br>
+</font></li>
+<li color=#4c4c4c>
+<font color=#4c4c4c>&nbsp;Fixed&nbsp;some&nbsp;more&nbsp;GCC&nbsp;3.x&nbsp;compilation&nbsp;problems.&nbsp;I'm&nbsp;still&nbsp;using&nbsp;[io]strstream,<br>
+&nbsp;&nbsp;as&nbsp;opposed&nbsp;to&nbsp;the&nbsp;more&nbsp;correct&nbsp;[io]stringstream,&nbsp;so&nbsp;that&nbsp;it&nbsp;should&nbsp;still<br>
+&nbsp;&nbsp;compile&nbsp;with&nbsp;older&nbsp;versions&nbsp;of&nbsp;GCC.&nbsp;Fingers&nbsp;crossed.<br>
+<br>
+</font></li>
+</ul>
+<ul><h3><font color=#666666>Version 0.1.13
+</font></h3>
+<li color=#666666>
+<font color=#666666>&nbsp;Patch&nbsp;from&nbsp;David&nbsp;Furodet&nbsp;to&nbsp;fix&nbsp;compilation&nbsp;problems&nbsp;on&nbsp;Solaris.<br>
+</font></li>
+<li color=#666666>
+<font color=#666666>&nbsp;Added&nbsp;'finishing&nbsp;comments'.&nbsp;This&nbsp;allows&nbsp;you&nbsp;to&nbsp;optionally&nbsp;add&nbsp;a&nbsp;comment&nbsp;to&nbsp;an<br>
+&nbsp;&nbsp;item&nbsp;when&nbsp;you&nbsp;are&nbsp;marking&nbsp;it&nbsp;as&nbsp;done,&nbsp;giving&nbsp;reasons/comments&nbsp;for&nbsp;why&nbsp;you&nbsp;are<br>
+&nbsp;&nbsp;marking&nbsp;it&nbsp;complete.&nbsp;This&nbsp;is&nbsp;really&nbsp;useful.&nbsp;This&nbsp;also&nbsp;breaks&nbsp;backward<br>
+&nbsp;&nbsp;compatibility&nbsp;with&nbsp;previous&nbsp;BINARY&nbsp;formats&nbsp;only.&nbsp;The&nbsp;XML&nbsp;format&nbsp;is&nbsp;not<br>
+&nbsp;&nbsp;affected.<br>
+<br>
+</font></li>
+</ul>
+<ul><h3><font color=#7f7f7f>Version 0.1.12
+</font></h3>
+<li color=#7f7f7f>
+<font color=#7f7f7f>&nbsp;Applied&nbsp;a&nbsp;patch&nbsp;by&nbsp;Michael&nbsp;Tilstra&nbsp;that&nbsp;fixes&nbsp;segfaults&nbsp;when&nbsp;overriding&nbsp;<br>
+&nbsp;&nbsp;colours.<br>
+</font></li>
+<li color=#7f7f7f>
+<font color=#7f7f7f>&nbsp;Added&nbsp;a&nbsp;script&nbsp;(contrib/tdrec)&nbsp;to&nbsp;display&nbsp;databases&nbsp;from&nbsp;all&nbsp;sub-directories.<br>
+&nbsp;&nbsp;Thanks&nbsp;to&nbsp;Brian&nbsp;Herlihy&nbsp;for&nbsp;the&nbsp;contribution.&nbsp;Modified&nbsp;it&nbsp;slightly&nbsp;so&nbsp;it&nbsp;<br>
+&nbsp;&nbsp;passes&nbsp;arguments&nbsp;to&nbsp;devtodo&nbsp;(such&nbsp;as&nbsp;--summary).<br>
+</font></li>
+<li color=#7f7f7f>
+<font color=#7f7f7f>&nbsp;Modified&nbsp;cd,&nbsp;pushd&nbsp;and&nbsp;popd&nbsp;replacement&nbsp;scripts&nbsp;(doc/scripts.sh)&nbsp;so&nbsp;that&nbsp;their&nbsp;<br>
+&nbsp;&nbsp;exit&nbsp;status&nbsp;is&nbsp;preserved.&nbsp;Required&nbsp;so&nbsp;things&nbsp;like&nbsp;this&nbsp;work&nbsp;correctly:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;doc&nbsp;&amp;&amp;&nbsp;echo&nbsp;foo<br>
+&nbsp;&nbsp;Thanks&nbsp;to&nbsp;Erin&nbsp;Quinlan&nbsp;for&nbsp;the&nbsp;fix.<br>
+</font></li>
+<li color=#7f7f7f>
+<font color=#7f7f7f>&nbsp;Now&nbsp;displays&nbsp;the&nbsp;index&nbsp;of&nbsp;newly&nbsp;added&nbsp;items&nbsp;when&nbsp;--verbose&nbsp;is&nbsp;on.&nbsp;Thanks&nbsp;to&nbsp;<br>
+&nbsp;&nbsp;James&nbsp;Troup&nbsp;for&nbsp;suggesting&nbsp;this.<br>
+</font></li>
+<li color=#7f7f7f>
+<font color=#7f7f7f>&nbsp;Fixed&nbsp;man&nbsp;page&nbsp;inconsistency&nbsp;with&nbsp;'-S'&nbsp;and&nbsp;'-s'&nbsp;for&nbsp;summary&nbsp;mode.&nbsp;Thanks&nbsp;to&nbsp;<br>
+&nbsp;&nbsp;James&nbsp;Troup&nbsp;again&nbsp;for&nbsp;picking&nbsp;this&nbsp;up.<br>
+</font></li>
+<li color=#7f7f7f>
+<font color=#7f7f7f>&nbsp;Another&nbsp;problem&nbsp;found&nbsp;by&nbsp;James&nbsp;Troup&nbsp;-&nbsp;when&nbsp;grafting,&nbsp;the&nbsp;validity&nbsp;of&nbsp;the&nbsp;<br>
+&nbsp;&nbsp;grafting&nbsp;index&nbsp;was&nbsp;only&nbsp;checked&nbsp;after&nbsp;the&nbsp;new&nbsp;item&nbsp;text&nbsp;was&nbsp;typed.&nbsp;This&nbsp;has<br>
+&nbsp;&nbsp;been&nbsp;recitifed.<br>
+</font></li>
+<li color=#7f7f7f>
+<font color=#7f7f7f>&nbsp;Work&nbsp;around&nbsp;for&nbsp;some&nbsp;weirdness&nbsp;when&nbsp;generating&nbsp;RPM's.<br>
+<br>
+</font></li>
+</ul>
+<ul><h3><font color=#999999>Version 0.1.11
+</font></h3>
+<li color=#999999>
+<font color=#999999>&nbsp;Modified&nbsp;.spec&nbsp;file&nbsp;so&nbsp;it&nbsp;doesn't&nbsp;do&nbsp;an&nbsp;aclocal/autoheader/automake/autoconf&nbsp;<br>
+&nbsp;&nbsp;before&nbsp;compiling.&nbsp;Fixes&nbsp;incompatibilities&nbsp;between&nbsp;versions&nbsp;of&nbsp;automake.<br>
+</font></li>
+<li color=#999999>
+<font color=#999999>&nbsp;Applied&nbsp;a&nbsp;patch&nbsp;sent&nbsp;in&nbsp;by&nbsp;Anreas&nbsp;Amann&nbsp;to&nbsp;fix&nbsp;more&nbsp;incompatibilities&nbsp;with&nbsp;<br>
+&nbsp;&nbsp;GCC&nbsp;3.0.<br>
+<br>
+</font></li>
+</ul>
+<ul><h3><font color=#b2b2b2>Version 0.1.10
+</font></h3>
+<li color=#b2b2b2>
+<font color=#b2b2b2>&nbsp;Now&nbsp;'using&nbsp;namespace&nbsp;std;'.&nbsp;It's&nbsp;the&nbsp;standard&nbsp;and&nbsp;it&nbsp;seems&nbsp;as&nbsp;if&nbsp;GCC&nbsp;3.0&nbsp;<br>
+&nbsp;&nbsp;finally&nbsp;requires&nbsp;it,&nbsp;so&nbsp;in&nbsp;it&nbsp;goes.<br>
+</font></li>
+<li color=#b2b2b2>
+<font color=#b2b2b2>&nbsp;Fixed&nbsp;an&nbsp;incompatibility&nbsp;with&nbsp;versions&nbsp;of&nbsp;GCC&nbsp;prior&nbsp;to&nbsp;3.0&nbsp;using&nbsp;different<br>
+&nbsp;&nbsp;arguments&nbsp;to&nbsp;std::string::compare.&nbsp;Quite&nbsp;annoying.&nbsp;I&nbsp;replaced&nbsp;it&nbsp;with&nbsp;<br>
+&nbsp;&nbsp;strncmp.<br>
+</font></li>
+<li color=#b2b2b2>
+<font color=#b2b2b2>&nbsp;Readline&nbsp;is&nbsp;driving&nbsp;me&nbsp;insane.&nbsp;The&nbsp;example&nbsp;from&nbsp;the&nbsp;readline&nbsp;info&nbsp;page&nbsp;says<br>
+&nbsp;&nbsp;to&nbsp;use&nbsp;"completion_matches"&nbsp;so&nbsp;I&nbsp;basically&nbsp;copied&nbsp;the&nbsp;code&nbsp;verbatim.&nbsp;But<br>
+&nbsp;&nbsp;some&nbsp;versions&nbsp;don't&nbsp;seem&nbsp;to&nbsp;include&nbsp;the&nbsp;function&nbsp;in&nbsp;the&nbsp;readline&nbsp;header&nbsp;<br>
+&nbsp;&nbsp;file?&nbsp;Agggggghh.&nbsp;So&nbsp;once&nbsp;again,&nbsp;it's&nbsp;back&nbsp;to&nbsp;using&nbsp;a&nbsp;manually&nbsp;created<br>
+&nbsp;&nbsp;header&nbsp;file.&nbsp;It&nbsp;seems&nbsp;to&nbsp;work&nbsp;the&nbsp;best.<br>
+<br>
+</font></li>
+</ul>
+<ul><h3><font color=#cbcbcb>Version 0.1.9
+</font></h3>
+<li color=#cbcbcb>
+<font color=#cbcbcb>&nbsp;I&nbsp;had&nbsp;a&nbsp;bad&nbsp;feeling&nbsp;that&nbsp;including&nbsp;the&nbsp;readline&nbsp;headers&nbsp;would&nbsp;cause&nbsp;problems<br>
+&nbsp;&nbsp;and&nbsp;I&nbsp;was&nbsp;right&nbsp;:(.&nbsp;I'm&nbsp;now&nbsp;not&nbsp;including&nbsp;any&nbsp;readline&nbsp;headers&nbsp;of&nbsp;any&nbsp;form,<br>
+&nbsp;&nbsp;so&nbsp;if&nbsp;compilation&nbsp;breaks&nbsp;due&nbsp;to&nbsp;your&nbsp;system&nbsp;readline&nbsp;headers&nbsp;having&nbsp;K&amp;R&nbsp;style<br>
+&nbsp;&nbsp;function&nbsp;declarations,&nbsp;upgrade&nbsp;to&nbsp;the&nbsp;latest&nbsp;version.<br>
+</font></li>
+<li color=#cbcbcb>
+<font color=#cbcbcb>&nbsp;Renamed&nbsp;the&nbsp;XSLT&nbsp;examples&nbsp;to&nbsp;reflect&nbsp;their&nbsp;purpose&nbsp;(eg.&nbsp;xslt-example.1&nbsp;=&gt;&nbsp;<br>
+&nbsp;&nbsp;todo2pdf.xslt)<br>
+<br>
+</font></li>
+</ul>
+<ul><h3><font color=#e5e5e5>Version 0.1.8
+</font></h3>
+<li color=#e5e5e5>
+<font color=#e5e5e5>&nbsp;Fixed&nbsp;for&nbsp;the&nbsp;spelling&nbsp;of&nbsp;"heirarchical"&nbsp;:)<br>
+</font></li>
+<li color=#e5e5e5>
+<font color=#e5e5e5>&nbsp;Repatched&nbsp;--mono&nbsp;fix&nbsp;that&nbsp;gets&nbsp;rid&nbsp;of&nbsp;spurious&nbsp;escape&nbsp;sequences&nbsp;(picked&nbsp;up<br>
+&nbsp;&nbsp;by&nbsp;Mark&nbsp;Eichin).<br>
+</font></li>
+<li color=#e5e5e5>
+<font color=#e5e5e5>&nbsp;Fixed&nbsp;envar&nbsp;expansion&nbsp;broken&nbsp;by&nbsp;event&nbsp;handling&nbsp;modifications.&nbsp;Whoops.<br>
+</font></li>
+<li color=#e5e5e5>
+<font color=#e5e5e5>&nbsp;Numeric&nbsp;priorities&nbsp;can&nbsp;now&nbsp;be&nbsp;specified&nbsp;on&nbsp;the&nbsp;command&nbsp;line.&nbsp;Christian<br>
+&nbsp;&nbsp;Kurz&nbsp;picked&nbsp;this&nbsp;one&nbsp;up.<br>
+</font></li>
+<li color=#e5e5e5>
+<font color=#e5e5e5>&nbsp;Added&nbsp;a&nbsp;new&nbsp;filter&nbsp;for&nbsp;searching&nbsp;through&nbsp;the&nbsp;database.&nbsp;This&nbsp;is&nbsp;done&nbsp;with&nbsp;<br>
+&nbsp;&nbsp;the&nbsp;filter&nbsp;'/'.&nbsp;eg.&nbsp;"todo&nbsp;--filter&nbsp;/CVS"&nbsp;will&nbsp;show&nbsp;all&nbsp;items&nbsp;with&nbsp;the&nbsp;word<br>
+&nbsp;&nbsp;CVS&nbsp;in&nbsp;them.&nbsp;This&nbsp;can&nbsp;also&nbsp;be&nbsp;expressed&nbsp;as&nbsp;a&nbsp;shorthand&nbsp;version:&nbsp;"todo&nbsp;/CVS".&nbsp;<br>
+&nbsp;&nbsp;The&nbsp;text&nbsp;is&nbsp;interpreted&nbsp;as&nbsp;a&nbsp;regular&nbsp;expression.<br>
+</font></li>
+<li color=#e5e5e5>
+<font color=#e5e5e5>&nbsp;Changed&nbsp;filter&nbsp;behaviour&nbsp;to&nbsp;be&nbsp;more&nbsp;logical.&nbsp;Numeric&nbsp;filters&nbsp;with&nbsp;no&nbsp;sign&nbsp;<br>
+&nbsp;&nbsp;prefix&nbsp;will&nbsp;now&nbsp;only&nbsp;show&nbsp;the&nbsp;item&nbsp;itself,&nbsp;not&nbsp;children.&nbsp;Prefixing&nbsp;the&nbsp;<br>
+&nbsp;&nbsp;filter&nbsp;with&nbsp;a&nbsp;+&nbsp;will&nbsp;display&nbsp;the&nbsp;children&nbsp;as&nbsp;well&nbsp;and&nbsp;prefixing&nbsp;with&nbsp;a&nbsp;-<br>
+&nbsp;&nbsp;will&nbsp;filter&nbsp;out&nbsp;that&nbsp;item.<br>
+</font></li>
+<li color=#e5e5e5>
+<font color=#e5e5e5>&nbsp;Subsequently&nbsp;almost&nbsp;totally&nbsp;rewrote&nbsp;filtering&nbsp;code&nbsp;so&nbsp;it's&nbsp;more&nbsp;logical&nbsp;and<br>
+&nbsp;&nbsp;doesn't&nbsp;break&nbsp;(hopefully).<br>
+</font></li>
+<li color=#e5e5e5>
+<font color=#e5e5e5>&nbsp;Short&nbsp;arguments&nbsp;can&nbsp;now&nbsp;be&nbsp;fully&nbsp;merged&nbsp;into&nbsp;one&nbsp;argument.&nbsp;eg.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;todo&nbsp;-v&nbsp;-v&nbsp;-f&nbsp;2-10<br>
+&nbsp;&nbsp;can&nbsp;be&nbsp;represented&nbsp;as:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;todo&nbsp;-vvf2-10<br>
+</font></li>
+<li color=#e5e5e5>
+<font color=#e5e5e5>&nbsp;Added&nbsp;an&nbsp;"echo"&nbsp;command&nbsp;for&nbsp;use&nbsp;in&nbsp;~/.todorc.&nbsp;This&nbsp;can&nbsp;be&nbsp;used&nbsp;for&nbsp;status<br>
+&nbsp;&nbsp;messages&nbsp;or&nbsp;whatever.&nbsp;eg.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;on&nbsp;save&nbsp;echo&nbsp;Saved&nbsp;$TODODB<br>
+</font></li>
+<li color=#e5e5e5>
+<font color=#e5e5e5>&nbsp;Added&nbsp;another&nbsp;PERL&nbsp;script&nbsp;(contrib/changelog2html)&nbsp;to&nbsp;convert&nbsp;directly&nbsp;from&nbsp;<br>
+&nbsp;&nbsp;the&nbsp;ChangeLog&nbsp;to&nbsp;HTML.<br>
+</font></li>
+<li color=#e5e5e5>
+<font color=#e5e5e5>&nbsp;Fixed&nbsp;default&nbsp;formatting&nbsp;string&nbsp;for&nbsp;--TODO.<br>
+</font></li>
+<li color=#e5e5e5>
+<font color=#e5e5e5>&nbsp;James&nbsp;Troup&nbsp;had&nbsp;the&nbsp;suggestion&nbsp;(which&nbsp;is&nbsp;now&nbsp;implemented)&nbsp;of&nbsp;clearing&nbsp;the&nbsp;<br>
+&nbsp;&nbsp;priority&nbsp;as&nbsp;soon&nbsp;as&nbsp;the&nbsp;user&nbsp;hits&nbsp;a&nbsp;key&nbsp;other&nbsp;than&nbsp;enter&nbsp;when&nbsp;editing&nbsp;an&nbsp;<br>
+&nbsp;&nbsp;existing&nbsp;item.&nbsp;<br>
+</font></li>
+<li color=#e5e5e5>
+<font color=#e5e5e5>&nbsp;Copied&nbsp;the&nbsp;readline.h&nbsp;and&nbsp;history.h&nbsp;from&nbsp;my&nbsp;system's&nbsp;readline&nbsp;into&nbsp;devtodo's<br>
+&nbsp;&nbsp;source.&nbsp;Hopefully&nbsp;this&nbsp;won't&nbsp;break&nbsp;compiles&nbsp;on&nbsp;any&nbsp;systems&nbsp;:\.<br>
+<br>
+</font></li>
+</ul>

@@ -1,0 +1,26 @@
+1. Installing
+    ./configure --sysconfdir=/etc
+    make
+    make install
+
+2. Optionally
+    Copy the contents of doc/scripts.sh or doc/scripts.tcsh (depending on your
+    shell) to your startup scripts (either global or local). More information
+    is available in the respective scripts.
+
+3. Optionally modify /etc/todorc to meet your own configuration needs.
+
+4. Usage
+    Displaying items:
+        todo
+    Adding an item:
+        tda
+    Editing an existing item:
+        tde <index>
+    Marking an item as completed:
+        tdd <index>
+    Removing an item:
+        tdr <index>
+
+5. Problems?
+    man devtodo

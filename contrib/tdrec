@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# recursive todo - runs todo in all subdirectories which have a todo list in
+# them.  Kindof useful for me since I stick todo lists everywhere..
+#
+# Does not follow symbolic links, to avoid recursing forever.
+#
+# Brian Herlihy
+#
+
+function tdrec () {
+	## If todo file exists, say where we are and show todo list
+	if [ -f .todo ] ; then
+		echo "[37m[1m-- TODO list for `pwd` --[0m"
+		todo "$@"
+	fi
+	for file in * ; do
+		if [ -d "./$file" -a ! -h "./$file" ] ; then
+			( cd "./$file"; tdrec "$@")
+		fi
+	done
+}
+
+tdrec "$@"

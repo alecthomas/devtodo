@@ -1,0 +1,54 @@
+
+The main author of devtodo is:
+	Alec Thomas <alec @ korn DOT ch>
+
+
+With contributions by:
+	Arthur Korn
+		Debian package maintainer and, basically, bug tracking GOD. You're a 
+		legend Arthur.
+
+	Christian Hammond
+		Database linking patch.
+
+	Philipp Buehler
+		Added <title> support to the XSLT transform.
+
+	David Furodet
+		Solaris build patches.
+
+	Michael Tilstra
+		Patch which fixed a segfault when overriding colours.
+	
+	Brian Herlihy
+		Wrote the tdrec script, which recursively displays all todo lists.
+	
+	Erin Quinlan
+		Patches for the cd/pushd/popd scripts.
+
+	Anreas Amann
+		GCC 3.x patches.
+
+	Mark Eichen
+		Tracking down the really painful regex slowdown problem.
+		Sent in the original/first XSLT transform.
+		Honourable mention for the LARGE number of bug fixes Mark sends in :)
+
+	Daniel Peterson
+		Sent in an XSLT transform for generating HTML.
+
+	Philippe Chiasson
+		Patch to fix compile problems on RedHat.
+
+	Matt Kraai
+		Found a segfault issue with readline, and various man page fixes.
+
+	Ron Bailey
+		Found a bug which resulted in editing of sub-items causing a seg-fault.
+
+	Matthew Russel
+		Contributed the doc/scripts.tcsh script so that TCSH uses get the same
+		love as BASH users.
+
+	Stephean Hegel
+		Fixed numerous bugs early in the life of devtodo (0.1.1 period)

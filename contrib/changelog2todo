@@ -1,0 +1,73 @@
+#!/usr/bin/perl -w
+use strict;
+
+#
+# Not actually contributed by anybody, but people might find this useful.
+# 
+# This is a small PERL script to convert a ChangeLog in the same format as that
+# used by devtodo into a devtodo database.
+#
+# DISCLAIMER: I've only been using PERL for about a week, so I'm sure there are 
+# much easier ways of doing some of these things.
+#
+
+sub htmlify {
+	s/&/&amp;/g;
+	s/</&lt;/g;
+	s/>/&gt;/g;
+	return $_;
+}
+
+open(CHANGELOG, "ChangeLog");
+
+print "<todo>\n";
+
+my $version = "";
+my $item = "";
+my $pseudotime = 0;
+
+while (<CHANGELOG>) {
+	if (/^[0-9]\.[0-9]\.[0-9]/) {
+		if ($item ne "") {
+			print $item;
+			print "</note>\n";
+			$item = "";
+		}
+		if ($version ne "") {
+			print "</note>\n";
+			$version = "";
+		}
+		print "<note priority='high' time='$pseudotime'>$_\n";
+		$pseudotime++;
+		$version = $_;
+	} elsif (/^\*/) {
+		s/^\*\w*//;
+		if ($item ne "") {
+			print $item;
+			print "</note>\n";
+			$item = "";
+		}
+		print "<note priority='medium' time='$pseudotime'>\n";
+		$pseudotime++;
+		chomp();
+		$item = htmlify($_);
+	} else {
+		chomp();
+		$item .= htmlify($_);
+	}
+}
+
+if ($item ne "") {
+	print $item;
+	print "</note>\n";
+	$item = "";
+}
+
+if ($version ne "") {
+	print "</note>\n";
+	$version = "";
+}
+
+print "</todo>\n";
+
+close(CHANGELOG);

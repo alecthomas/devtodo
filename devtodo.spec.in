@@ -1,0 +1,59 @@
+Summary: Todo is a program to display and manage a hierarchical, prioritised list of outstanding tasks, jobs, or just reminders.
+Name: devtodo
+Version: @VERSION@
+Release: 1
+Copyright: GPL
+Group: Development/Tools
+Source: devtodo-%{PACKAGE_VERSION}.tar.gz
+BuildRoot: /var/tmp/%{name}-buildroot
+Packager: Alec Thomas <alec@korn.ch>
+
+%description
+Todo is a program to display and manage a hierarchical, prioritised list of 
+outstanding work, or just reminders.
+
+The program itself is assisted by a few shell scripts that override default
+builtins. Specifically, cd, pushd and popd are overridden so that when using
+one of these commands to enter a directory, the todo will display any 
+outstanding items in that directory.
+
+For much more complete information please refer to the man page (devtodo(1)).
+%prep
+%setup -q
+%build
+CXXFLAGS="$RPM_OPT_FLAGS" ./configure --prefix=/usr --sysconfdir=/etc
+make RPM_OPT_FLAGS="$RPM_OPT_FLAGS"
+
+%install
+make DESTDIR=$RPM_BUILD_ROOT install
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%files
+%defattr(-,root,root)
+%doc AUTHORS README TODO COPYING INSTALL NEWS QuickStart doc/todorc.example doc/scripts.sh doc/scripts.tcsh ChangeLog
+/usr/bin/devtodo
+/usr/bin/todo
+/usr/bin/tda
+/usr/bin/tdr
+/usr/bin/tde
+/usr/bin/tdd
+/usr/bin/tdl
+/usr/man/man1/devtodo.1.gz
+/usr/man/man1/todo.1.gz
+/usr/man/man1/tda.1.gz
+/usr/man/man1/tdr.1.gz
+/usr/man/man1/tde.1.gz
+/usr/man/man1/tdd.1.gz
+/usr/man/man1/tdl.1.gz
+%config /etc/todorc
+%changelog
+* Sat Dec 14 2002 Alec Thomas <alec@korn.ch>
+- Added tdl stuff
+* Thu Nov  8 2001 Alec Thomas <alec@korn.ch>
+- Now include example scripts for sh/tcsh and gzip man pages due to extreme bizarreness of rpm.
+* Wed Jul 11 2001 Alec Thomas <alec@korn.ch>
+- Removed aclocal/autoheader/autoconf/automake use.
+* Mon May 14 2001 Alec Thomas <alec@korn.ch>
+- Initial RPMage.

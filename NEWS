@@ -1,0 +1,23 @@
+I'm looking for new features to add! If you think of any send them to me at 
+	alecthomas@mail.com
+
+02/07/01
+  One week until I head off for a journey across Europe. This will mean that
+  no bugfixes or other enhancements will be made to devtodo for approximately
+  three or four months.
+
+13/04/01
+  Many, many new features and fixes in 0.1.4. I'm also simultaneously working
+  on the next major revision which will allow databases to be linked together,
+  allow for much more useful filtering and reporting, etc. Basically, a major
+  overhaul.
+
+  Minor disaster where I tried --no-sync and it promptly removed my entire
+  database for todo! I rebuilt it, sort of, from TODO. Ironic really.
+
+17/03/01
+  I've started compiling todo on the sourceforge compile farm, so it's now
+  been successfully compiled on Debian, Slackware, Solaris 2.8 and FreeBSD.
+
+  I'd also like to give a heartfelt thanks to the guys at Sourceforge and
+  VA Linux for contributing such a valuable resource to the community.

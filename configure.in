@@ -1,0 +1,91 @@
+AC_INIT(src/main.cc)
+AM_INIT_AUTOMAKE(devtodo,0.1.18)
+
+# We don't want the util source to be made into a shared lib as it's
+# only used locally
+AC_DISABLE_SHARED
+
+AM_PROG_LIBTOOL
+AC_PROG_CXX
+AC_PROG_INSTALL
+AC_PROG_LN_S
+
+AC_LANG_CPLUSPLUS
+
+# Extra options
+AC_ARG_ENABLE(debug,
+	[  --enable-debug          enable debugging CXXFLAGS (-Wall -g) [off]],
+	[case "${enableval}" in
+		yes) debug=true; CXXFLAGS="-Wall -g" ;;
+		no) debug=false ;;
+		*) AC_MSG_ERROR(--enable-debug expects either yes or no) ;;
+	esac], [debug=false])
+AM_CONDITIONAL(DEBUG, test x$debug = xtrue)
+
+# Don't use termcap to obtain window size
+AC_ARG_WITH(termcap, [  --without-termcap       don't use termcap to obtain terminal width])
+if test "${with_termcap}_" = _ -o "${with_termcap}_" = yes; then
+	AC_DEFINE(USETERMCAP)
+fi
+
+# Check for various headers and functions - although I'm not doing anything 
+# with them yet
+AC_CHECK_HEADERS(regex.h string utility iterator stdexcept list map vector \
+	typeinfo ctype.h stack iostream fstream ctime)
+AC_CHECK_FUNCS(regcomp ctime time unlink isatty strncmp)
+
+dnl The autoconf test for strftime is broken now (due to gcc 3.3 bug?):
+dnl Gcc 3.3 testprog = ``extern "C" char strftime;'', build with g++ test.cc
+dnl breaks with:
+dnl   test.cc:1: error: nonnull argument with out-of-range operand number 
+dnl   (arg 1, operand 3)
+
+
+AC_MSG_CHECKING(for strftime)
+
+AC_COMPILE_IFELSE(
+[AC_LANG_PROGRAM([#include <time.h>],
+[[
+char * s;
+time_t t = time(NULL);
+size_t x = strftime(s, 5, "%a", localtime(&t));
+]]
+)],
+[
+        AC_DEFINE(HAVE_STRFTIME, 1, [Define to 1 if you have the 'strftime' func
+tion.])
+        AC_MSG_RESULT(yes)
+],
+[AC_MSG_RESULT(no)])
+
+# Check for readline - modified heavily from librep
+# check for terminal library
+# this is a very cool solution from octave's configure.in
+unset tcap
+for termlib in ncurses curses termcap terminfo termlib; do
+  AC_CHECK_LIB(${termlib}, tputs, [tcap="$tcap -l$termlib"])
+  case "$tcap" in
+    *-l${termlib}*)
+      break
+    ;;
+  esac
+done
+
+AC_CHECK_LIB(readline, readline,[READLINE_LIBS="-lreadline $tcap"], , $tcap)
+
+if test -z "$READLINE_LIBS"; then
+	AC_MSG_ERROR([Can't find readline libraries])
+fi
+AC_SUBST(READLINE_LIBS)
+
+SYSCONFDIR="`eval echo $sysconfdir`"
+AC_DEFINE_UNQUOTED(SYSCONFDIR, "$SYSCONFDIR")
+AC_SUBST(SYSCONFDIR)
+
+AC_CHECK_PROG(HAVE_CRASH_CONFIG, crash-config, yes)
+AC_SUBST(HAVE_CRASH_CONFIG)
+
+AM_CONFIG_HEADER(config.h)
+AC_OUTPUT(Makefile src/Makefile util/Makefile doc/Makefile doc/devtodo.1 makepackages.sh devtodo.spec devtodo.list)
+
+chmod +x makepackages.sh
