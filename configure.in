@@ -1,5 +1,5 @@
 AC_INIT(src/main.cc)
-AM_INIT_AUTOMAKE(devtodo,0.1.18)
+AM_INIT_AUTOMAKE(devtodo,0.1.19)
 
 # We don't want the util source to be made into a shared lib as it's
 # only used locally

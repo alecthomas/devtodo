@@ -1,5 +1,5 @@
 SUBDIRS=util src doc
-EXTRA_DIST=.todo TODO QuickStart util/README doc/devtodo.1.in .cvsignore \
+EXTRA_DIST=.todo QuickStart util/README doc/devtodo.1.in .cvsignore \
 	doc/todorc.example doc/scripts.sh doc/scripts.tcsh acconfig.h \
 	$(shell ls contrib/*)
 

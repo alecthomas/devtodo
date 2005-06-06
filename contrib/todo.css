@@ -1,0 +1,140 @@
+/*
+
+default CSS stylesheet for todo2xhtml_css version 0.6
+
+Copyright (c) 2004-2005 Francesco Poli
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+*/
+
+body
+{
+    color: black;
+    background-color: #e4e4e4;
+    font-family: monospace;
+    font-size: 120%;
+    line-height: 1.5;
+    width: 100%;
+    padding: 0em;
+    border-width: 0em;
+    margin: 0em;
+}
+
+#outercontainer
+{
+    color: black;
+    background-color: white;
+    padding: 2.4em 0.8em 0.8em;
+    border: 0.4em dashed #e4e4e4;
+    margin: 3.2em 1.6em 1.6em;
+}
+
+#outertitle
+{
+    position: absolute;
+    top: -0.02em;
+    right: 1.1em;
+    font-family: "Verdana", "Arial", "Helvetica", sans-serif;
+    text-align: center;
+    font-size: 250%;
+    line-height: 1.0;
+    width: auto;
+    padding: 0em;
+    border-width: 0em;
+    margin: 0em;
+}
+
+#innertitle h1
+{
+    color: black;
+    padding: 0.1em;
+    font-weight: bold;
+    border-width: 0em;
+    margin: 0.2em;
+}
+
+#outerlegend
+{
+    /* display: none; /* I don't like legends! */
+    float: right;
+    width: 22.2em;
+    padding: 0em;
+    border-width: 0em;
+    margin: 0em;
+}
+
+#innerlegend
+{
+    width: auto;
+    padding: 0.5em;
+    border: 0.01em solid black;
+    margin: 1.0em 2.4em 1.0em;
+}
+
+li
+{
+    padding: 0em 0.4em 0em;
+}
+
+li:hover
+{
+    background-color: #f4f4f4;
+}
+
+.veryhigh
+{
+    font-weight: bold;
+    color: red;
+}
+
+.high
+{
+    font-weight: bold;
+    color: #fb0;
+}
+
+.medium
+{
+    font-weight: normal;
+    color: black;
+}
+
+.low
+{
+    font-weight: normal;
+    color: blue;
+}
+
+.verylow
+{
+    font-weight: normal;
+    color: #4a4;
+}
+
+.done
+{
+    text-decoration: line-through;
+}
+
+.old
+{
+    /* display: none; /* I don't want to see done items! */
+}

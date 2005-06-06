@@ -749,8 +749,8 @@ int erased = 0;
 			erased++;
 			if (options.verbose > 1)
 				cout << info << "todo: permanently removing item '" << (*j) << "'" << normal << endl;
-			erase(todo, *j);
 			t->db->setDirty(true);
+			erase(todo, *j);
 		} else
 			notfound.push_back(*j);
 	}
