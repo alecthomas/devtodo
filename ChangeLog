@@ -1,3 +1,14 @@
+0.1.19
+* Updated my E-Mail address after about a year of having the wrong one :)
+* Removed informational message at top of .todo files as it was rather useless
+  and actually annoying to some people placing their .todo files under version
+  control systems.
+* Added a XSLT -> XHTML+CSS transform from Francesco Poli.
+* Added a bash completion script from the Gentoo projects maintainer Aaron
+  Walker.
+* Fixed seg fault visible on 64-bit systems but present on all. Thanks to the
+  Debian project for notifying me and providing a fix.
+
 0.1.18
 * Added --purge [<days-old>] option which lets you purge old completed items.
   Thanks to Jakub Turski for wanting this feature.
