@@ -51,7 +51,8 @@ void XML::init() {
 			"*[[:space:]]*(/?)>");
 		xmlScan.addPattern(XmlEnd, "</[a-zA-Z0-9_-]+>");
 		xmlScan.addPattern(XmlDataBegin, "<!DATA[[:space:]]*\\[\\[");
-		xmlScan.addPattern(XmlContent, "([^<]|[\n\r])+");                                     
+		xmlScan.addPattern(XmlContent, "([\n\r]|[^<])+");
+
 
 		commentScan.addPattern(CommentEnd, "-->[[:space:]]*");
 		commentScan.addPattern(CommentBody, "[\n\r]|.");
@@ -165,6 +166,9 @@ char str[token.size()];
 			break;
 			case XmlContent :
 				_child.push_back(new XML(Body, this, token));
+			break;
+			default:
+				throw exception("unexpected token '" + token.value() + "'", token.line());
 			break;
 		}
 }

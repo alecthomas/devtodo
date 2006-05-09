@@ -108,7 +108,7 @@ class TodoDB {
 		void initColour();
 		void initColourPost();
 		Todo::Priority getPriority(string current = "");
-		int TodoDB::markDone(Todo &todo);
+		int markDone(Todo &todo);
 
 		void formatItem(ostream &out, int depth, Todo const &item, string const &format);
 

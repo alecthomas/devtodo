@@ -14,6 +14,8 @@ using namespace std;
 	01/02/01	Initial creation
 */
 
+class TodoDB;
+
 class Todo {
 	public :
 		friend class TodoDB;
