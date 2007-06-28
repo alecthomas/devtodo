@@ -1,3 +1,12 @@
+0.1.20
+* A few bugfixes.
+* Added XML declaration parsing/saving. This is a stop-gap at best, but will
+  hopefully be useful to some.
+* Removed reliance on builtin regex library. Hopefully the completely broken
+  version of glibc that instigated the inclusion of it is now out of
+  circulation.
+* Fixed a whole bunch of compiler warnings on more recent GCC versions.
+
 0.1.19
 * Updated my E-Mail address after about a year of having the wrong one :)
 * Removed informational message at top of .todo files as it was rather useless

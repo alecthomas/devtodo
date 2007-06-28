@@ -28,7 +28,7 @@ int getWidth() {
 			throw runtime_error(string(string("unknown terminal type '") + termtype + "'").c_str());
 		term_initialized = true;
 	}
-	return tgetnum("co");
+	return tgetnum(const_cast<char*>("co"));
 }
 #else
 

@@ -96,7 +96,7 @@ vector<string> out;
 
 string replace(string const &match, string const &repl, string const &in) {
 string out;
-unsigned found = 0, lastfound = 0;
+string::size_type found = 0, lastfound = 0;
 
 	while ((found = in.find(match, found)) != string::npos) {
 		out += in.substr(lastfound, found - lastfound);

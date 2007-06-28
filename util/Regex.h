@@ -9,7 +9,7 @@
 #include <stdexcept>
 #include <cassert>
 #include <sys/types.h>
-#include "c_regex.h"
+#include <regex.h>
 
 #ifndef CRASH_REGEX_CACHE_THRESHOLD
 #define CRASH_REGEX_CACHE_THRESHOLD 128

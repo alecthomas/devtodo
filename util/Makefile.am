@@ -1,5 +1,5 @@
 noinst_LTLIBRARIES=libutil.la
-libutil_la_SOURCES=c_regex.c c_regex.h Terminal.cc Terminal.h Lexer.cc Lexer.h \
+libutil_la_SOURCES=Terminal.cc Terminal.h Lexer.cc Lexer.h \
 	Regex.cc Regex.h XML.cc XML.h Strings.cc Strings.h CommandArgs.cc CommandArgs.h
 
 rebuild:

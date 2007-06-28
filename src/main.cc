@@ -17,7 +17,7 @@ int arg = 0;
 
 int main(int argc, char const **argv) {
 	// Initialise readline
-	rl_readline_name = PACKAGE;
+	rl_readline_name = const_cast<char*>(PACKAGE);
 	rl_initialize();
 
 string database;

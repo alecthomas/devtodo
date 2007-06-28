@@ -36,6 +36,9 @@ void XML::parse(char const *str) {
 	try {
 	Lexer::iterator i = xmlScan.begin(str);
 
+		if (i.type() == XmlDecl) {
+			++i;
+		}
 		parseElement(i);
 	} catch (Lexer::exception &e) {
 		throw exception(e.what(), e.line());
@@ -45,6 +48,8 @@ void XML::parse(char const *str) {
 void XML::init() {
 	// Only initialise scanners once
 	if (!initialised) {
+		// <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+		xmlScan.addPattern(XmlDecl, "<\\?xml.*?>[[:space:]]*");
 		xmlScan.addPattern(XmlCommentBegin, "<!--");
 		xmlScan.addPattern(XmlBegin, "<[a-zA-Z0-9_-]+"
 			"([[:space:]]+[a-zA-Z_0-9-]+=(([/a-zA-Z_0-9,.]+)|(\"[^\"]*\")|('[^']*')))"

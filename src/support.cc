@@ -60,7 +60,7 @@ Options::Filter::Filter() {
 void parseSort(string const &arg) {
 vector<string> keys = str::split(",", arg);
 struct {
-	char *str;
+	const char *str;
 	int key;
 } table[] = {
 	{ "created", Options::Sort::Created },
@@ -741,7 +741,7 @@ int c = rl_getc(stdin);
 		nukeonhit = false;
 	}
 	if (c == 14) {
-		rl_insert_text("\n");
+		rl_insert_text(const_cast<char*>("\n"));
 		return 0;
 	}
 	return c;

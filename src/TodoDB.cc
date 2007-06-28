@@ -480,7 +480,7 @@ vector<string> tmp = split(",", str), out;
 */
 Todo::Priority TodoDB::getPriority(string current)
 {
-char *pri[] = {
+const char *pri[] = {
 	"veryhigh",
 	"high",
 	"medium",

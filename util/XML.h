@@ -64,7 +64,7 @@ class XML {
 		void parseData(Lexer::iterator &token);
 
 		// Lexer constants
-		enum { XmlCommentBegin = 256, XmlBegin, XmlEnd, XmlDataBegin, XmlContent };
+		enum { XmlDecl = 256, XmlCommentBegin, XmlBegin, XmlEnd, XmlDataBegin, XmlContent };
 		enum { ElementWS = 256, ElementValue, ElementKey, ElementAssignment, ElementTerminator};
 		enum { CommentEnd = 256,  CommentBody };
 		enum { DataEnd = 256, DataBody };

@@ -218,6 +218,7 @@ bool xmlSave(TodoDB const &todo, string const &file) {
 		if (of.bad()) return false;
 		if (options.verbose > 1)
 			cout << "todo: saving to database '" << file << "'" << endl;
+		of << "<?xml version=\"1.0\"?>" << endl;
 		of << "<todo version=\"" << VERSION << "\">" << endl;
 		if (todo.titleText != "")
 			of	<< "    <title>" << endl 
