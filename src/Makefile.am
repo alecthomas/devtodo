@@ -8,9 +8,9 @@ INCLUDES=-I../util
 LIBS=@READLINE_LIBS@
 
 if DEBUG
-CPPFLAGS=-g
+AM_CPPFLAGS=-g
 else
-CPPFLAGS+=-DNDEBUG
+AM_CPPFLAGS=-DNDEBUG
 endif
 
 install-exec-hook:

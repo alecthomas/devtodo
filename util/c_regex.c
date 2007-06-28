@@ -145,12 +145,7 @@
    even if config.h says that we can.  */
 # undef REL_ALLOC
 
-# if defined STDC_HEADERS || defined _LIBC
 #  include <stdlib.h>
-# else
-char *malloc ();
-char *realloc ();
-# endif
 
 /* When used in Emacs's lib-src, we need to get bzero and bcopy somehow.
    If nothing else has been done, use the method below.  */
