@@ -1030,6 +1030,15 @@ int marked = 0;
 		cout << info << "todo: marked " << marked << " records as done" << normal << endl;
 }
 
+int TodoDB::markNotDone(Todo &todo) {
+int count = 1;
+
+	todo.done = false;
+	for (multiset<Todo>::iterator i = todo.child->begin(); i != todo.child->end(); i++)
+		count += markNotDone(const_cast<Todo&>(*i));
+	return count;
+}
+
 void TodoDB::notdone() {
 vector<string> done = options.index, notfound;
 int marked = 0;
@@ -1038,11 +1047,9 @@ int marked = 0;
 	Todo *t = find(todo, *j);
 
 		if (t) {
-			t->done = false;
-			marked++;
+			marked += markNotDone(*t);
 			if (options.verbose > 1)
 				cout << "todo: marked '" << *j << "' as not done" << endl;
-
 			t->db->setDirty(true);
 		} else
 			notfound.push_back(*j);

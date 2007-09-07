@@ -896,9 +896,11 @@ string out;
 			if (i != mark) {
 			string var = str.substr(mark, i - mark);
 
-				if (!getenv(var.c_str()) && options.verbose)
-					cout << "notice: no such environment variable '" + var + "'." << endl;
-				out += getenv(var.c_str());
+				if (!getenv(var.c_str())) {
+					if (options.verbose)
+						cout << "notice: no such environment variable '" + var + "'." << endl;
+				} else
+					out += getenv(var.c_str());
 			} else
 				out += '$';
 
