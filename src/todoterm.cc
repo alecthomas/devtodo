@@ -2,6 +2,8 @@
 #include "todoterm.h"
 
 #ifdef USETERMCAP
+#include <cstdio>
+#include <cstdlib>
 #include <iostream>
 #include <string>
 #include <stdexcept>
