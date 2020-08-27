@@ -883,27 +883,6 @@ void TodoDB::view(multiset<Todo> const &todo, int ind) {
 				formatItem(cout, ind, todo, options.format["verbose-display"]);
 			else
 				formatItem(cout, ind, todo, options.format["display"]);
-			if (options.comment && todo.comment != "") {
-			int indent = 4 * (ind + 1);
-
-				cout << comment << string(indent, ' ');
-				if (options.summary) {
-				const string s = todo.comment;
-
-					if (s.find('\n') != string::npos) {
-						if ((int)s.find('\n') < options.columns - 1 - indent)
-							cout << s.substr(0, s.find('\n')) << info << "+" << normal;
-						else
-							cout << s.substr(0, options.columns - 1 - indent) << info << "+" << normal;
-					} else
-					if ((int)s.size() > options.columns - 3 - indent)
-						cout << "(" << s.substr(0, options.columns - 3 - indent) << ")" << info << "+";
-					else
-						cout << "(" << s << ")";
-				} else
-					wraptext(cout, "(" + todo.comment + ")", indent, indent, options.columns);
-				cout << normal << endl;
-			}
 		}
 
 		//if (todo.filterchildren && !todo.unfilteredchildren) continue;
@@ -1232,6 +1211,31 @@ Options::Dir dir = Options::Equal;
 						} else
 							wraptext(out, item.text, i, indent, options.columns);
 					}
+                                            if (options.comment && item.comment != "") {
+                                                if(options.verbose) {
+                                                    out << "\n" << info << string(indent, ' ') << "Comments: " << comment;
+                                                    wraptext(out, item.comment, indent, indent, options.columns);
+                                                } else {
+                                                    out << "\n" << comment << string(indent, ' ');
+                                                if (options.summary) {
+				const string s = item.comment;
+
+					if (s.find('\n') != string::npos) {
+						if ((int)s.find('\n') < options.columns - 1 - indent)
+							out << s.substr(0, s.find('\n')) << info << "+" << normal;
+						else
+							out << s.substr(0, options.columns - 1 - indent) << info << "+" << normal;
+					} else
+					if ((int)s.size() > options.columns - 3 - indent)
+						out << "(" << s.substr(0, options.columns - 3 - indent) << ")" << info << "+";
+					else
+						out << "(" << s << ")";
+				} else
+                                                    wraptext(out, "(" + item.comment + ")", indent, indent, options.columns);
+                                                }
+				out << normal;
+			}
+
 					break;
 					case 't' :
 						if (options.summary) {
