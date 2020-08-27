@@ -1,5 +1,9 @@
-AC_INIT(src/main.cc)
+AC_INIT
+AC_CONFIG_SRCDIR([src/main.cc])
 AM_INIT_AUTOMAKE(devtodo,0.1.20)
+
+# don't rebuild Makefiles (=> timestamp skew due to patch)
+AM_MAINTAINER_MODE
 
 # We don't want the util source to be made into a shared lib as it's
 # only used locally
@@ -10,7 +14,7 @@ AC_PROG_CXX
 AC_PROG_INSTALL
 AC_PROG_LN_S
 
-AC_LANG_CPLUSPLUS
+AC_LANG([C++])
 
 # Extra options
 AC_ARG_ENABLE(debug,
@@ -25,7 +29,7 @@ AM_CONDITIONAL(DEBUG, test x$debug = xtrue)
 # Don't use termcap to obtain window size
 AC_ARG_WITH(termcap, [  --without-termcap       don't use termcap to obtain terminal width])
 if test "${with_termcap}_" = _ -o "${with_termcap}_" = yes; then
-	AC_DEFINE(USETERMCAP)
+	AC_DEFINE(USETERMCAP, 1, [ Use termcap to get terminal width])
 fi
 
 # Check for various headers and functions - although I'm not doing anything 
@@ -79,13 +83,14 @@ fi
 AC_SUBST(READLINE_LIBS)
 
 SYSCONFDIR="`eval echo $sysconfdir`"
-AC_DEFINE_UNQUOTED(SYSCONFDIR, "$SYSCONFDIR")
+AC_DEFINE_UNQUOTED(SYSCONFDIR, "$SYSCONFDIR", [System configuration directory])
 AC_SUBST(SYSCONFDIR)
 
 AC_CHECK_PROG(HAVE_CRASH_CONFIG, crash-config, yes)
 AC_SUBST(HAVE_CRASH_CONFIG)
 
-AM_CONFIG_HEADER(config.h)
-AC_OUTPUT(Makefile src/Makefile util/Makefile doc/Makefile doc/devtodo.1 makepackages.sh devtodo.spec devtodo.list)
+AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_FILES([Makefile src/Makefile util/Makefile doc/Makefile doc/devtodo.1 makepackages.sh devtodo.spec devtodo.list])
+AC_OUTPUT
 
 chmod +x makepackages.sh
