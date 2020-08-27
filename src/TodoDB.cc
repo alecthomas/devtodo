@@ -968,12 +968,11 @@ unsigned purged = purge(todo, now - options.purgeage * 86400);
 
 unsigned TodoDB::purge(multiset<Todo> &todo, time_t age) {
 unsigned purged = 0;
-
-	for (multiset<Todo>::iterator i = todo.begin(); i != todo.end(); ++i) {
+	multiset<Todo>::iterator i = todo.begin();
+	while (i != todo.end()) {
 		if (i->done && i->doneTime < age) {
 		multiset<Todo>::iterator last = i++;
-
-			cout << i->doneTime << " < " << age << endl;
+			cout << last->doneTime << " < " << age << endl;
 			last->db->setDirty(true);
 			todo.erase(last);
 			++purged;
@@ -981,6 +980,7 @@ unsigned purged = 0;
 			if (i->child) {
 				purged += purge(*i->child, age);
 			}
+                        i++;
 		}
 	}
 	return purged;
