@@ -209,7 +209,7 @@ enum { Help = -100, Remove, Version, Title, Colour, Mono, ForceColour,
 	args.addArgument('g', "graft", CommandArgs::Required);
 	args.setHelp('g', "In conjunction with --add or --link, graft the new item to the specified item.");
 	args.addArgument('R', "reparent", CommandArgs::Required);
-	args.setHelp('R', "Change the parent of the first item index to the second item index (seperated by a comma). If no second index is given the item is reparented to the root of the tree. eg. todo -R 1,2");
+	args.setHelp('R', "Change the parent of the first item index to the second item index (separated by a comma). If no second index is given the item is reparented to the root of the tree. eg. todo -R 1,2");
 	args.addArgument('p', "priority", CommandArgs::Required);
 	args.setHelp('p', "In conjunction with --add, set the default priority (default|veryhigh|high|medium|low|verylow).");
 	args.addArgument('e', "edit", CommandArgs::Required);
@@ -237,7 +237,7 @@ enum { Help = -100, Remove, Version, Title, Colour, Mono, ForceColour,
 	args.addArgument('v', "verbose");
 	args.setHelp('v', "Display verbosely.");
 	args.addArgument(Colour, "colour", CommandArgs::Required);
-	args.setHelp(Colour, "Override default colours of todo items. Multiple colours can be specified, seperated by commas. eg. high=red,medium=white. Items are bolded by prefixing them with a '+'.");
+	args.setHelp(Colour, "Override default colours of todo items. Multiple colours can be specified, separated by commas. eg. high=red,medium=white. Items are bolded by prefixing them with a '+'.");
 	args.addArgument(Mono, "mono");
 	args.setHelp(Mono, "Disable all use of colour.");
 	args.addArgument(ForceColour, "force-colour");
@@ -527,7 +527,7 @@ enum { Help = -100, Remove, Version, Title, Colour, Mono, ForceColour,
 			case 'R' :
 				options.index = todo.getIndexList(i.parameter());
 				if (options.index.size() > 2)
-					throw runtime_error("--reparent accepts a maximum of two comma seperated indices");
+					throw runtime_error("--reparent accepts a maximum of two comma separated indices");
 				options.mode = TodoDB::Reparent;
 			break;
 			case 'p' : 
