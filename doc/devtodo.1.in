@@ -49,7 +49,7 @@ Add a note (will prompt for a note if one is not supplied).
 In conjunction with \fI\-\-add\fR or \fI\-\-link\fR, graft the new item to the specified item.
 .TP
 \fB\-l, \-\-link \fI<database>\fR\fR
-Link the specified todo file into the body of this one. If the linked database has a title set, this will be used as the body of the linking item otherwise the directory name of the linked database will be used. Use --remove (or tdr) to remove linked databases - this does \fBnot\fR remove the database itself, only the link.
+Link the specified todo file into the body of this one. If the linked database has a title set, this will be used as the body of the linking item otherwise the directory name of the linked database will be used. Use \-\-remove (or tdr) to remove linked databases \(hy this does \fBnot\fR remove the database itself, only the link.
 .TP 
 \fB\-R,\-\-reparent \fI<index>[,<index>]\fR\fR
 Change the parent of the first item index to the second item index. If no second index is given the item is reparented to the root of the tree.
@@ -121,10 +121,10 @@ Sort the database with the specified expression. Refer to the section \fISORTING
 Be paranoid about some settings, including permissions.
 .TP 
 \fB\-\-database\-loaders \fI<loader list>\fR\fR
-Try the database formats in the given order. Valid formats are \fIxml\fR and \fIbinary\fR. eg. todo --database-loaders binary,xml. The default format is XML.
+Try the database formats in the given order. Valid formats are \fIxml\fR and \fIbinary\fR. eg. todo \-\-database\-loaders binary,xml. The default format is XML.
 .TP 
 \fB\-\-backup [\fI<n>\fR]\fR
-Backup the database up to \fI<n>\fR times, just before it is written to. If \fI<n>\fR is not specified, one backup will be made. The filenames used to store the backups are the default database name with their revision appended like so: .todo.1, .todo.2, etc. To actually use one of these backups, you can either mv it to .todo or use --database .todo.<n> to explicitly specify its use.
+Backup the database up to \fI<n>\fR times, just before it is written to. If \fI<n>\fR is not specified, one backup will be made. The filenames used to store the backups are the default database name with their revision appended like so: .todo.1, .todo.2, etc. To actually use one of these backups, you can either mv it to .todo or use \-\-database .todo.<n> to explicitly specify its use.
 .TP
 \fB\-s, \-\-summary\fR
 Toggle "summary" mode, where long items are truncated to one line.
@@ -133,7 +133,7 @@ Toggle "summary" mode, where long items are truncated to one line.
 Edit or show comments respectively.
 .TP
 \fB\-\-timeout [\fI<time>\fR]\fR
-If \fI<time>\fR is specified, the timeout between database displays is set to this number of seconds. If no \fI<time>\fR is specified, the behaviour is to display the database \fIonly\fR if it has not been displayed for the number of seconds specified by --timeout \fIwith\fR the \fI<time>\fR given. eg. \fItodo --timeout 10 --timeout\fR would only display the database at most once every 10 seconds. Putting a \fItimeout 10\fR in your ~/.todorc is a good option, then the --timeout in the \fIdoc/scripts.*\fR will mean that the database won't be displayed every time you cd into a directory.
+If \fI<time>\fR is specified, the timeout between database displays is set to this number of seconds. If no \fI<time>\fR is specified, the behaviour is to display the database \fIonly\fR if it has not been displayed for the number of seconds specified by \-\-timeout \fIwith\fR the \fI<time>\fR given. eg. \fItodo \-\-timeout 10 \-\-timeout\fR would only display the database at most once every 10 seconds. Putting a \fItimeout 10\fR in your ~/.todorc is a good option, then the \-\-timeout in the \fIdoc/scripts.*\fR will mean that the database won't be displayed every time you cd into a directory.
 .TP
 \fB\-\-purge [\fI<days-old>\fR]\fR
 Purge all completed items older than \fI<days-old>\fR. If \fI<days-old>\fR is omitted, all completed records are purged.
@@ -175,7 +175,7 @@ Priorities are specified as described in the \fIPRIORITIES\fR section. A prefix 
 .LP
 Examples:
 .LP
-todo --filter done,-children,+low
+todo \-\-filter done,\-children,+low
 .LP
 This will display only those items that are done and have a priority of low or higher. In addition, children will be collapsed.
 .LP
@@ -196,7 +196,7 @@ format display=%i%[info]%f%2n.%[priority]%T
 .br
 format generated=%2i-%T%2i  (added %d, priority %p)\\n\\n
 .LP
-There are four seperate format options: \fIdisplay\fR, \fIgenerated\fR, \fIverbose\-display\fR and \fIverbose-generated\fR. The latter two are used to format their respective text when --verbose is specified as an argument to todo.
+There are four seperate format options: \fIdisplay\fR, \fIgenerated\fR, \fIverbose\-display\fR and \fIverbose-generated\fR. The latter two are used to format their respective text when \-\-verbose is specified as an argument to todo.
 .LP
 In addition, users can create their own format strings by simply passing a different identifier to \fIformat\fR. This can then be enabled by using \fI\-\-use\-format\fR. eg.
 .LP
@@ -228,13 +228,13 @@ Summary text (ie. one line only, equivalent to \fI--summary\fR).
 The priority level of the current item.
 .TP
 \fB%c\fR
-The current items creation date, formatted according to --date-format.
+The current items creation date, formatted according to \-\-date\-format.
 .TP
 \fB%d\fR
-The date when the item was marked as done, formatted according to --date-format.
+The date when the item was marked as done, formatted according to \-\-date\-format.
 .TP
 \fB%D\fR
-The duration of the item, formatted according to --date-format.
+The duration of the item, formatted according to \-\-date\-format.
 .TP
 \fB%[<n>]n\fR
 The index number of the current item. The optional numeric value \fI<n>\fR specifies the number of characters the number should occupy. The number is padded out with spaces so as to fill this number of characters.
@@ -253,13 +253,13 @@ Please note that when indenting, you will \fItypically\fR want to use a prefix v
 .LP 
 The display of items in the database can be sorted on a variety of keys. Given a series of keys todo sorts on each successive key, continuing to the next only if the previous key comparison was equal. For example:
 .LP
-todo --sort -done,text
+todo \-\-sort \-done,text
 .LP
 This will sort firstly by whether an item is completed and secondly by their text. This effectively groups items into two blocks \- those that are complete and those that aren't.
 .LP
 The keys that are available are \fIcreated\fR, \fIcompleted\fR, \fItext\fR, \fIpriority\fR, \fIduration\fR, \fInone\fR and \fIdone\fR. Each key, except \fInone\fR can be prefixed with a - to reverse its default order and multiple keys must be seperated with a ,.
 .LP
-If multiple --sort parameters are encountered the last one is used. This means that a 'sort' entry in ~/.todorc will be overridden by any on the command line.
+If multiple \-\-sort parameters are encountered the last one is used. This means that a 'sort' entry in ~/.todorc will be overridden by any on the command line.
 .SH "INDICES"
 .LP 
 Indicies are used as options to a variety of command line arguments. Multiple note indices are seperated with commas (spaces are \fInot\fR allowed). Children are scoped using a '.'.
@@ -274,7 +274,7 @@ The second sub\-item would be represented like this: 1.2
 .LP 
 The wildcard '*' can be used to represent all children of a node. eg. 1.*
 .LP
-Ranges of notes can be specified by using '<a>-<b>'. For example, to mark notes 10.1.2, 10.1.3 and 10.3.4 as done, you could do: todo --done 10.1.2-4
+Ranges of notes can be specified by using '<a>\-<b>'. For example, to mark notes 10.1.2, 10.1.3 and 10.3.4 as done, you could do: todo \-\-done 10.1.2\-4
 .SH "COLOUR"
 .LP 
 Various items can be colourised. Items that can are \fIveryhigh\fR, \fIhigh\fR, \fImedium\fR, \fIlow\fR, \fIverylow\fR, \fItitle\fR and \fIinfo\fR. \fIinfo\fR is used for displaying item numbers and general information.
