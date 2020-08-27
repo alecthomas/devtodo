@@ -1,6 +1,6 @@
 /*
 
-default CSS stylesheet for todo2xhtml_css version 0.6
+default CSS stylesheet for todo2xhtml_css version 0.9
 
 Copyright (c) 2004-2005 Francesco Poli
 
@@ -30,7 +30,7 @@ body
     color: black;
     background-color: #e4e4e4;
     font-family: monospace;
-    font-size: 120%;
+    font-size: 110%;
     line-height: 1.5;
     width: 100%;
     padding: 0em;
@@ -51,7 +51,7 @@ body
 {
     position: absolute;
     top: -0.02em;
-    right: 1.1em;
+    right: 1.7em;
     font-family: "Verdana", "Arial", "Helvetica", sans-serif;
     text-align: center;
     font-size: 250%;
@@ -75,7 +75,7 @@ body
 {
     /* display: none; /* I don't like legends! */
     float: right;
-    width: 22.2em;
+    width: 26.0em;
     padding: 0em;
     border-width: 0em;
     margin: 0em;
@@ -99,42 +99,61 @@ li:hover
     background-color: #f4f4f4;
 }
 
-.veryhigh
+#innerlegend li
+{
+    margin: 5px 0px 5px;
+}
+
+a.visibility
+{
+    font-weight: normal;
+    border: 3px outset #eee;
+    margin: 1px 5px 1px 0px;
+    padding: 2px 0.5em 2px;
+    text-decoration: none;
+    background-color: #eee;
+    color: black;
+    display: none; /* buttons must not be rendered, unless a JavaScript
+                      interpreter enables them... */
+}
+
+a.visibility:active
+{
+    border: 3px inset #eee;
+}
+
+.veryhigh, .veryhighdone
 {
     font-weight: bold;
     color: red;
 }
 
-.high
+.high, .highdone
 {
     font-weight: bold;
     color: #fb0;
 }
 
-.medium
+.medium, .mediumdone
 {
     font-weight: normal;
     color: black;
 }
 
-.low
+.low, .lowdone
 {
     font-weight: normal;
     color: blue;
 }
 
-.verylow
+.verylow, .verylowdone
 {
     font-weight: normal;
     color: #4a4;
 }
 
-.done
+.veryhighdone, .highdone, .mediumdone, .lowdone, .verylowdone
 {
     text-decoration: line-through;
-}
-
-.old
-{
     /* display: none; /* I don't want to see done items! */
 }

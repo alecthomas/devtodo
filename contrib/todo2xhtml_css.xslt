@@ -3,9 +3,10 @@
 <!--
     todo2xhtml_css - convert a devtodo database to a CSS+XHTML page
 
-    Version:  0.6
+    Version:  0.9
 
     Copyright (c) 2004-2005 Francesco Poli, <frx@firenze.linux.it>
+    Copyright (c) 2005 Arthur Korn, <arthur@korn.ch>
 
     Permission is hereby granted, free of charge, to any person obtaining
     a copy of this software and associated documentation files (the
@@ -75,31 +76,36 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
   <head>
     <title>Todo list</title>
+<style type="text/css">
 <xsl:text disable-output-escaping = "yes">
-&lt;link rel='stylesheet' href='todo.css' type='text/css'/&gt;
+/*&lt;![CDATA[*/
+@import "./.todo.css";
+/*]]&gt;*/
 </xsl:text>
-    <script type="text/javascript">
-    <xsl:text disable-output-escaping = "yes">
-    &lt;!--
-    function updateDisplay()
+</style>
+<script type="text/javascript">
+<xsl:text disable-output-escaping = "yes">
+//&lt;![CDATA[
+&lt;!--
+function updateDisplay(tag, tag_class, new_display)
+{
+    var tags = document.getElementsByTagName(tag);
+    for (var i=0; i&lt;tags.length; i++)
     {
-	var spans = document.getElementsByTagName("span");
-	for (var i=0; i&lt;spans.length; i++) {
-	    var thing=spans[i];
-	    if (thing.className=="old") {
-		if (document.getElementById("dispform").dispold.checked) {
-		    thing.style.display="inline";
-		} else {
-		    thing.style.display="none";
-		}
-	    }
-	}
+        var thing = tags[i];
+        if (thing.className == tag_class)
+        {
+            thing.style.display = new_display;
+        }
     }
-    //--&gt;
-    </xsl:text>
-    </script>
+}
+//--&gt;
+
+//]]&gt;
+</xsl:text>
+</script>
   </head>
-  <body onLoad="updateDisplay()">
+  <body onload="updateDisplay('a', 'visibility', 'inline')">
     <div id="outercontainer">
       <div id="innercontainer">
         <div id="outertitle">
@@ -110,31 +116,44 @@
         <div id="outerlegend">
           <div id="innerlegend">
             <ol>
-              <li class="veryhigh">
-                <span>veryhigh</span>
-                <span class="old"><span class="done">(done)</span></span>
-              </li>
-              <li class="high">
-                <span>high</span>
-                <span class="old"><span class="done">(done)</span></span>
-              </li>
-              <li class="medium">
-                <span>medium</span>
-                <span class="old"><span class="done">(done)</span></span>
-              </li>
-              <li class="low">
-                <span>low</span>
-                <span class="old"><span class="done">(done)</span></span>
-              </li>
-              <li class="verylow">
-                <span>verylow</span>
-                <span class="old"><span class="done">(done)</span></span>
-              </li>
+              <li class="veryhigh"><a class="visibility"
+              href="#" title="show done items"
+              onclick="updateDisplay('li', 'veryhighdone', 'list-item')">s</a>
+              <a class="visibility" href="#" title="hide done items"
+              onclick="updateDisplay('li', 'veryhighdone', 'none')">h</a>
+              veryhigh</li>
+              <li class="high"><a class="visibility"
+              href="#" title="show done items"
+              onclick="updateDisplay('li', 'highdone', 'list-item')">s</a>
+              <a class="visibility" href="#" title="hide done items"
+              onclick="updateDisplay('li', 'highdone', 'none')">h</a>
+              high</li>
+              <li class="medium"><a class="visibility"
+              href="#" title="show done items"
+              onclick="updateDisplay('li', 'mediumdone', 'list-item')">s</a>
+              <a class="visibility" href="#" title="hide done items"
+              onclick="updateDisplay('li', 'mediumdone', 'none')">h</a>
+              medium</li>
+              <li class="low"><a class="visibility"
+              href="#" title="show done items"
+              onclick="updateDisplay('li', 'lowdone', 'list-item')">s</a>
+              <a class="visibility" href="#" title="hide done items"
+              onclick="updateDisplay('li', 'lowdone', 'none')">h</a>
+              low</li>
+              <li class="verylow"><a class="visibility"
+              href="#" title="show done items"
+              onclick="updateDisplay('li', 'verylowdone', 'list-item')">s</a>
+              <a class="visibility" href="#" title="hide done items"
+              onclick="updateDisplay('li', 'verylowdone', 'none')">h</a>
+              verylow</li>
             </ol>
-			<form action="." method="get" id="dispform">
-				<input type="checkbox" name="dispold" checked="" onChange="updateDisplay()"/>
-				  Display done items.
-			</form>
+            <ol>
+              <li class="veryhighdone">done veryhigh</li>
+              <li class="highdone">done high</li>
+              <li class="mediumdone">done medium</li>
+              <li class="lowdone">done low</li>
+              <li class="verylowdone">done verylow</li>
+            </ol>
           </div>
         </div>
         <div id="outerlist">
@@ -161,24 +180,15 @@
 </xsl:template>
 
 <xsl:template match="note">
-  <xsl:element name="span">
-    <xsl:if test="@done">
-      <xsl:attribute name="class">old</xsl:attribute>
+  <xsl:element name="li">
+    <xsl:attribute name="class">
+      <xsl:value-of select="@priority" />
+      <xsl:if test="@done">done</xsl:if>
+    </xsl:attribute>
+    <xsl:value-of select="child::text()" />
+    <xsl:if test="./note">
+      <xsl:call-template name="list_of_notes" />
     </xsl:if>
-    <xsl:element name="li">
-      <xsl:attribute name="class">
-        <xsl:value-of select="@priority" />
-      </xsl:attribute>
-      <xsl:element name="span">
-        <xsl:if test="@done">
-          <xsl:attribute name="class">done</xsl:attribute>
-        </xsl:if>
-        <xsl:value-of select="child::text()" />
-      </xsl:element>
-      <xsl:if test="./note">
-        <xsl:call-template name="list_of_notes" />
-      </xsl:if>
-    </xsl:element>
   </xsl:element>
 </xsl:template>
 
