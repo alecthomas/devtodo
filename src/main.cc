@@ -1,7 +1,7 @@
+#include <readline/readline.h>
 #include "TodoDB.h"
 #include "support.h"
 #include "config.h"
-#include "todorl.h"
 
 void joinArgs(TodoDB &todo, vector<string> const &args, int argc, char const **argv) {
 char const *av[args.size() + argc];
