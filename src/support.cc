@@ -4,16 +4,16 @@
 #include <cstdio>
 #include <sstream>
 #include <stdexcept>
+#include <readline/readline.h>
+#include <readline/history.h>
 #include "support.h"
 #include "TodoDB.h"
 #include "Strings.h"
 #include "CommandArgs.h"
 #include "todoterm.h"
 #include "config.h"
-#include "todorl.h"
 
 using namespace str;
-static bool nukeonhit = false;
 
 Options options;
 
@@ -693,7 +693,6 @@ string out = ctime(&date);
 /* Readline support */
 string const *rl_buffer;
 
-static char *getMatches(char *text, int state) {
 static char const *list[] = {
 	"veryhigh",
 	"high",
@@ -702,6 +701,8 @@ static char const *list[] = {
 	"verylow",
 	0
 };
+
+static char *getMatches(const char *text, int state) {
 static int i, len;
 char const *t;
 
@@ -718,42 +719,22 @@ char const *t;
 	return 0;
 }
 
-static char **completion(char *text, int start, int end) {
+static char **completion(const char *text, int start, int end) {
 	if (start == 0)
-		return completion_matches(text, (char*(*)(...))getMatches);
+		return rl_completion_matches(text, (char*(*)(const char*, int))getMatches);
 	return 0;
 }
 
 static int init_rl() {
 	rl_insert_text(const_cast<char*>(rl_buffer->c_str()));
-	rl_attempted_completion_function = (char **(*)(...))completion;
+	rl_attempted_completion_function = (char **(*)(const char*, int, int))completion;
 	return 0;
 }
 
-static int nuke_on_hit() {
-int c = rl_getc(stdin);
-
-	if (nukeonhit && c != 13) {
-		rl_delete_text(0, rl_end);
-		rl_end = rl_mark = rl_point = 0;
-		rl_redisplay();
-		rl_clear_message();
-		nukeonhit = false;
-	}
-	if (c == 14) {
-		rl_insert_text(const_cast<char*>("\n"));
-		return 0;
-	}
-	return c;
-}
-
-string readText(string const &prompt, string existing, bool nuke) {
+string readText(string const &prompt, string existing) {
 string out;
 
-	rl_startup_hook = (int(*)(...))init_rl;
-	rl_getc_function = (int(*)())nuke_on_hit;
-
-	nukeonhit = nuke;
+	rl_startup_hook = (int(*)(const char*, int))init_rl;
 
 	rl_buffer = &existing;
 char const *tmp = readline(const_cast<char*>(prompt.c_str()));

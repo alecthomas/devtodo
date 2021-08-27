@@ -502,7 +502,7 @@ string priority;
 		if (isatty(0)) {
 			if (options.verbose)
 				cout << info << "Enter a priority from those listed above." << normal << endl;
-			priority = readText("priority> ", current, true);
+			priority = readText("priority [" + current + "] > ", "");
 		} else
 			priority = current;
 		priority = trim(priority);

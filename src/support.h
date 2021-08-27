@@ -57,7 +57,7 @@ string symbolisePriority(Todo::Priority sym);
 Todo::Priority desymbolisePriority(string sym);
 
 // text input
-string readText(string const &prompt, string existing = "", bool nuke = false);
+string readText(string const &prompt, string existing = "");
 void addHistory(string text);
 
 // Parse command line arguments
