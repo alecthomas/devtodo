@@ -734,8 +734,7 @@ static int init_rl() {
 string readText(string const &prompt, string existing) {
 string out;
 
-	rl_startup_hook = (int(*)(const char*, int))init_rl;
-
+	rl_startup_hook = (int(*)())init_rl;
 	rl_buffer = &existing;
 char const *tmp = readline(const_cast<char*>(prompt.c_str()));
 	if (tmp) out = tmp;
