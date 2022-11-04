@@ -506,8 +506,8 @@ string priority;
 		} else
 			priority = current;
 		priority = trim(priority);
-		// Default to medium
-		if (priority == "") priority = "medium";
+		// Default to medium or current
+		if (priority == "") priority = current;
 		try {
 			if (priority.size() == 1 && isdigit(priority[0])) {
 			int index = destringify<int>(priority);
